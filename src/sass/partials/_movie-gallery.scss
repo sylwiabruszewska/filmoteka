@@ -1,8 +1,19 @@
 .movie-gallery {
-  @include flex-center;
+  display: flex;
   margin-bottom: 60px;
+  flex-wrap: wrap;
+  gap: 16px;
+  list-style-type: none;
 
   &__container {
     margin-bottom: 60px;
+  }
+}
+
+.movie-card {
+  width: calc((100% - 2 * 16px) / 3);
+
+  &__img {
+    width: 100%;
   }
 }
