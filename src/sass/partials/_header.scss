@@ -1,0 +1,38 @@
+.page-header {
+  background-color: $headerColor;
+  padding-top: 40px;
+  padding-bottom: 80px;
+  margin-bottom: 60px;
+  height: 216px;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  &__heading {
+    color: $whiteColor;
+    font-weight: 500;
+  }
+}
+
+.box {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.nav {
+  display: flex;
+  align-items: baseline;
+  gap: 39px;
+  list-style-type: none;
+
+  &__link {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: $whiteColor;
+  }
+}

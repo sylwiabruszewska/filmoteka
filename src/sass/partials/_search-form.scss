@@ -1,0 +1,20 @@
+.search-form {
+  width: 394px;
+  display: flex;
+  justify-content: space-between;
+
+  &__input {
+    flex-grow: 1;
+  }
+}
+
+.search-form__container {
+  @include flex-center;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  @include flex-center;
+  color: $redColor;
+  font-size: 14px;
+}

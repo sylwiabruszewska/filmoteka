@@ -1,0 +1,8 @@
+.movie-gallery {
+  @include flex-center;
+  margin-bottom: 60px;
+
+  &__container {
+    margin-bottom: 60px;
+  }
+}
