@@ -5,3 +5,18 @@
 
 // Style dla pliku z przykładem HTML fragmentu
 @import './example';
+
+@import './utils/vars';
+@import './utils/typography.scss';
+@import './base/global.scss';
+@import './utils/media-queries.scss';
+@import './utils/flex-center';
+@import './utils/container.scss';
+
+@import './partials/header.scss';
+@import './partials/search-form';
+@import './partials/movie-gallery';
+@import './partials/pagination';
+
+@import './partials/header-library';
+@import './partials/my-library';
