@@ -1,0 +1,8 @@
+.pagination {
+  @include flex-center;
+  margin-bottom: 60px;
+}
+
+.close {
+  fill: black;
+}
