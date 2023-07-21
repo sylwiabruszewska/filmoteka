@@ -3,7 +3,11 @@
   padding-top: 40px;
   padding-bottom: 80px;
   margin-bottom: 60px;
-  height: 216px;
+  height: 230px;
+
+  @include mq(tablet) {
+    height: 216px;
+  }
 
   &__container {
     display: flex;
@@ -15,6 +19,11 @@
   &__heading {
     color: $whiteColor;
     font-weight: 500;
+    font-size: 30px;
+
+    @include mq(mobile, max) {
+      display: none;
+    }
   }
 }
 
@@ -27,12 +36,14 @@
 .nav {
   display: flex;
   align-items: baseline;
-  gap: 39px;
+  gap: 40px;
   list-style-type: none;
 
   &__link {
     text-decoration: none;
     text-transform: uppercase;
     color: $whiteColor;
+    font-size: 12px;
+    font-weight: 500;
   }
 }
