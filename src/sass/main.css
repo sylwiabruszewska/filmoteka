@@ -35,7 +35,8 @@ body {
 
 ul,
 li,
-h1 {
+h1,
+h2 {
   margin: 0;
   padding: 0;
 }
@@ -100,6 +101,23 @@ a {
   align-items: baseline;
   gap: 40px;
   list-style-type: none;
+}
+.nav__item {
+  display: block;
+  text-decoration: none;
+  color: #ffffff;
+}
+.nav__item--show {
+  position: relative;
+}
+.nav__item--show::after {
+  position: absolute;
+  display: block;
+  content: "";
+  width: 100%;
+  height: 3px;
+  background-color: #ff001b;
+  bottom: -3px;
 }
 .nav__link {
   text-decoration: none;
@@ -178,21 +196,70 @@ a {
 }
 
 .movie-gallery {
-  display: flex;
   margin-bottom: 60px;
-  flex-wrap: wrap;
-  gap: 16px;
-  list-style-type: none;
+}
+@media screen and (min-width: 768px) {
+  .movie-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .movie-gallery {
+    gap: 16px;
+  }
 }
 .movie-gallery__container {
   margin-bottom: 60px;
 }
 
 .movie-card {
-  width: calc((100% - 32px) / 3);
+  margin-bottom: 20px;
+  list-style-type: none;
+}
+@media screen and (min-width: 768px) {
+  .movie-card {
+    width: calc((100% - 32px) / 2);
+    margin-bottom: 0px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .movie-card {
+    width: calc((100% - 32px) / 3);
+  }
 }
 .movie-card__img {
   width: 100%;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+@media screen and (min-width: 768px) {
+  .movie-card__img {
+    margin-bottom: 8px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .movie-card__img {
+    margin-bottom: 12px;
+  }
+}
+.movie-card__heading, .movie-card__caption {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+@media screen and (min-width: 1280px) {
+  .movie-card__heading, .movie-card__caption {
+    font-size: 20px;
+    line-height: 1.33;
+  }
+}
+.movie-card__heading {
+  text-transform: uppercase;
+}
+.movie-card__caption {
+  color: #ff6b08;
 }
 
 .is-hidden {
@@ -218,7 +285,7 @@ a {
 
 .modal-movie {
   position: relative;
-  background-color: .modal-movie whiteColor;
+  background-color: #fff;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.2);
   margin: auto;
   padding: 20px;
@@ -441,8 +508,58 @@ a {
   margin-bottom: 60px;
 }
 
-.close {
-  fill: black;
+.pagination ul {
+  display: flex;
+  background: #fff;
+  gap: 16px;
+}
+
+.pagination ul li {
+  display: flex;
+  color: #000000;
+  list-style: none;
+  line-height: 16px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 5px 5px 5px 5px;
+}
+
+.pagination ul li.dots {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  cursor: default;
+}
+
+.pagination ul li.btn {
+  background: #f7f7f7;
+  padding: 12px 12px;
+}
+
+.pagination ul li.numb:hover,
+.pagination ul li.active,
+.pagination ul li.btn:hover {
+  color: #fff;
+  background: #ff6b08;
+}
+
+.arrow__left--icon {
+  height: 20px;
+  width: 20px;
+  fill: #000000;
+}
+
+.arrow__right--icon {
+  height: 20px;
+  width: 20px;
+  fill: #000000;
 }
 
 .footer {
@@ -530,9 +647,56 @@ a {
   align-items: center;
   justify-content: center;
   gap: 16px;
+  gap: 20px;
+  margin-bottom: 62px;
+}
+@media screen and (min-width: 768px) {
+  .btn-container {
+    gap: 32px;
+    margin-bottom: 60px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .btn-container {
+    gap: 16px;
+  }
 }
 
 .library-gallery {
   display: flex;
   justify-content: center;
+}
+
+.btn-watched, .btn-queue {
+  color: #fff;
+  background: transparent;
+  width: 130px;
+  height: 44px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.33;
+  letter-spacing: 0em;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  padding-top: 14px;
+  padding-bottom: 12px;
+  text-transform: uppercase;
+}
+@media screen and (min-width: 768px) {
+  .btn-watched, .btn-queue {
+    width: 152px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .btn-watched, .btn-queue {
+    width: 147px;
+    height: 42px;
+  }
+}
+.btn-watched:hover, .btn-queue:hover {
+  border: 1px solid #FF6B01;
+  background-color: #FF6B01;
 }/*# sourceMappingURL=main.css.map */
