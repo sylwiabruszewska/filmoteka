@@ -1,4 +1,15 @@
 .btn-container {
   @include flex-center;
   gap: 16px;
+  gap: 20px;
+  margin-bottom: 62px;
+  @include mq(tablet) {
+    gap: 32px;
+    margin-bottom: 60px;
+  }
+  @include mq(desktop) {
+    gap: 16px;
+  }
 }
+
+
