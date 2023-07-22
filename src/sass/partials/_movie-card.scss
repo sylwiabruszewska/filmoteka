@@ -1,0 +1,47 @@
+.movie-card {
+  margin-bottom: 20px;
+  list-style-type: none;
+
+  @include mq(tablet) {
+    width: calc((100% - 32px) / 2);
+    margin-bottom: 0px;
+  }
+
+  @include mq(desktop) {
+    width: calc((100% - 2 * 16px) / 3);
+  }
+
+  &__img {
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+
+    @include mq(tablet) {
+      margin-bottom: 8px;
+    }
+
+    @include mq(desktop) {
+      margin-bottom: 12px;
+    }
+  }
+
+  &__heading,
+  &__caption {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.2;
+
+    @include mq(desktop) {
+      font-size: 20px;
+      line-height: 1.33;
+    }
+  }
+
+  &__heading {
+    text-transform: uppercase;
+  }
+
+  &__caption {
+    color: $primaryColor;
+  }
+}
