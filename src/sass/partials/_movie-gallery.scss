@@ -1,17 +1,19 @@
 .movie-gallery {
+  display: flex;
   margin-bottom: 60px;
-
-  @include mq(tablet) {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 32px;
-  }
-
-  @include mq(desktop) {
-    gap: 16px;
-  }
+  flex-wrap: wrap;
+  gap: 16px;
+  list-style-type: none;
 
   &__container {
     margin-bottom: 60px;
+  }
+}
+
+.movie-card {
+  width: calc((100% - 2 * 16px) / 3);
+
+  &__img {
+    width: 100%;
   }
 }
