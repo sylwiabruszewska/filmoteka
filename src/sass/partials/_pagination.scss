@@ -3,6 +3,56 @@
   margin-bottom: 60px;
 }
 
-.close {
-  fill: black;
+.pagination ul {
+  display: flex;
+  background: #fff;
+  gap: 16px;
+}
+
+.pagination ul li {
+  display: flex;
+  color: #000000;
+  list-style: none;
+  line-height: 16px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 5px 5px 5px 5px;
+}
+
+.pagination ul li.dots {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  cursor: default;
+}
+
+.pagination ul li.btn {
+  background: #f7f7f7;
+  padding: 12px 12px;
+}
+
+.pagination ul li.numb:hover,
+.pagination ul li.active,
+.pagination ul li.btn:hover {
+  color: #fff;
+  background: #ff6b08;
+}
+
+.arrow__left--icon {
+  height: 20px;
+  width: 20px;
+  fill: #000000;
+}
+
+.arrow__right--icon {
+  height: 20px;
+  width: 20px;
+  fill: #000000;
 }
