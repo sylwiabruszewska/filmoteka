@@ -30,12 +30,11 @@ async function renderMoviesCards(movies) {
       const releaseDate = (release_date || first_air_date || 'Brak danych').slice(0, 4);
       const movieTitle = title ? title : name;
       return `
-          <li class="movie-card">
-            <img class="movie-card__img" src="https://image.tmdb.org/t/p/w500${poster_path}" loading="lazy" alt="${movieTitle}" />
-            <h2>${movieTitle}</h2>
-            <p>${movieGenres}</p>
-            <p>${releaseDate}</p>
-          </li>
+        <li class="movie-card">
+          <img class="movie-card__img" src="https://image.tmdb.org/t/p/w500${poster_path}" loading="lazy" alt="${movieTitle}" />
+          <h2 class="movie-card__heading">${movieTitle}</h2>
+          <span class="movie-card__caption">${movieGenres} | ${releaseDate}</span>
+        </li>
         `;
     })
     .join('');
