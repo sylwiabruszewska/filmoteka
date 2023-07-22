@@ -1,24 +1,14 @@
 const galleryOfMovies = document.querySelector('.movie-gallery');
 const input = document.querySelector('.search-form__input');
 const searchBtn = document.querySelector('.search-form__button');
-const body = document.querySelector('body');
 
 const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const MAIN_PAGE_PATH = '/trending/all/day';
 const GENRE_LIST_PATH = `/genre/movie/list`;
-const SEARCH_MOVIE_PATH = '/search/movie';
-
-searchBtn.addEventListener('click', searchMovies);
+const SEARCH_MOVIE_PATH = `/search/movie`;
 
 let page = 1;
-
-// async function searchMovies(e) {
-//   e.preventDefault();
-//   const result = await fetch(`${BASE_URL}${SEARCH_MOVIE_PATH}?api_key=${API_KEY}&query=dabangg`);
-//   const getMovies = await response.json();
-//   return result.results[0];
-// }
 
 async function fetchMovies(page) {
   const response = await fetch(`${BASE_URL}${MAIN_PAGE_PATH}?api_key=${API_KEY}&page=${page}`);
@@ -64,5 +54,26 @@ async function fetchGenres() {
 fetchMovies(page)
   .then(renderMoviesCards)
   .catch(error => console.error(error));
+function clearInterfaceUI() {
+  galleryOfMovies.innerHTML = '';
+}
 
-export { fetchMovies, renderMoviesCards, fetchGenres };
+searchBtn.addEventListener('click', searchMovies);
+
+async function searchMovies(e) {
+  e.preventDefault();
+  const response = await fetch(
+    `${BASE_URL}${SEARCH_MOVIE_PATH}?api_key=${API_KEY}&query=${input.value}&page=${page}`,
+  );
+  const data = await response.json();
+  fetchMovies(input.value)
+    .then(renderMoviesCards(data.results))
+    .catch(error => {
+      clearInterfaceUI();
+      alert('No results');
+    })
+    .finally((galleryOfMovies.innerHTML = ''));
+  return (galleryOfMovies.innerHTML = data.query[0]);
+}
+
+export { fetchMovies, renderMoviesCards, fetchGenres, searchMovies };
