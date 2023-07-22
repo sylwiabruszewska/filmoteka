@@ -6,56 +6,52 @@
   line-height: 1.14;
   position: relative;
 
- 
-@include mq(tablet) {
-      width: 336px;
-    }
-@include mq(desktop) {
-      width: 394px;
-    }
-  
-  
+  @include mq(tablet) {
+    width: 336px;
+  }
+  @include mq(desktop) {
+    width: 394px;
+  }
+
   // display: flex;
   // justify-content: space-between;
-  
+
   &__input {
     width: 100%;
     color: $whiteColor;
     flex-grow: 1;
     outline: transparent;
-     border: none;
-  background-color: transparent;
-  border: none;
-  border-bottom: 0.5px solid $whiteColor;
-  padding-left: 0;
-  padding-right: 0;
-  padding-bottom: 4px;
-  &::placeholder {
-    color: #ffffff;
+    border: none;
+    background-color: transparent;
+    border: none;
+    border-bottom: 0.5px solid $whiteColor;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 4px;
+    &::placeholder {
+      color: #ffffff;
+    }
   }
-  }
-
 
   &__button {
-     position: absolute;
+    position: absolute;
     top: 0;
     right: 0;
-  background-color: transparent;
+    background-color: transparent;
     border: none;
     cursor: pointer;
     padding-right: 0;
     padding-bottom: 0px;
   }
-
-
-
 }
-
-
 
 .search-form__container {
   @include flex-center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+
+  @include mq(tablet) {
+    margin-bottom: 20px;
+  }
 }
 
 .error-message {
