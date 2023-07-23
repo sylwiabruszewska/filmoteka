@@ -1,61 +1,22 @@
-.footer {
-  background-color: $color-bcg-footer;
-  height: 100px;
-  width: 100%;
-  padding-top: 28px;
-  padding-bottom: 29px;
-  text-align: center;
-  @media screen and (min-width: 768px) {
-    height: 79px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-  }
-  &__text {
-    color: $color-footer;
-    line-height: calc(16 / 14);
-    letter-spacing: 0.03em;
-    @media screen and (min-width: 768px) {
-      font-size: 16px;
-      line-height: calc(19 / 16);
-      margin-right: 7px;
-    }
-  }
+.page-footer {
+  background-color: $footerBgColor;
+
   &__container {
-    @media screen and (min-width: 768px) {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    padding: 30px 0;
+    @include flex-center;
+    flex-direction: column;
+    gap: 10px;
+
+    @include mq(tablet) {
+      flex-direction: row;
+      gap: 0;
     }
   }
-  &__authors {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    color: $color-footer;
-    line-height: calc(16 / 14);
-    cursor: pointer;
+}
 
-    &:hover,
-    &:focus {
-      color: $primaryColor;
-    }
-    @media screen and (min-width: 768px) {
-      font-size: 16px;
-      line-height: calc(19 / 16);
-      padding: 0;
-    }
-  }
-
-  &__sub {
-    display: flex;
-    color: $color-footer;
-    font-family: $fontFamily;
-    line-height: calc(16 / 14);
-    align-items: center;
-    justify-content: center;
-    @media screen and (min-width: 768px) {
-      font-size: 16px;
-      line-height: calc(19 / 16);
-    }
+.footer {
+  &__part {
+    @include flex-center;
   }
 
   &__icon {
@@ -70,6 +31,35 @@
       100% {
         transform: scale(1.5);
       }
+    }
+  }
+
+  &__text {
+    color: $footerTextColor;
+    display: flex;
+    align-items: center;
+  }
+
+  @include mq(tablet) {
+    &__text:first-child {
+      margin-right: 3px;
+    }
+  }
+
+  &__team {
+    cursor: pointer;
+    background: none;
+    padding: 0;
+    margin: 0;
+    border: none;
+    margin-left: 3px;
+    display: block;
+    color: $footerTextColor;
+    text-decoration: underline;
+
+    &:hover,
+    &:focus {
+      color: $primaryColor;
     }
   }
 }

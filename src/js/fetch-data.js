@@ -1,4 +1,5 @@
 import Notiflix from 'notiflix';
+import noMoviePoster from '../images/no-poster-available.jpg';
 
 const galleryOfMovies = document.querySelector('.movie-gallery');
 const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
@@ -28,15 +29,17 @@ async function renderMoviesCards(movies) {
         .filter(genreName => genreName)
         .join(', ');
 
-      const releaseDate = (release_date || first_air_date || 'Brak danych').slice(0, 4);
+      const releaseDate = (release_date || first_air_date || '').slice(0, 4);
       const movieTitle = title ? title : name;
+      const moviePoster =
+        poster_path != null ? `https://image.tmdb.org/t/p/w500${poster_path}` : noMoviePoster;
       return `
-        <li class="movie-card">
-          <img class="movie-card__img" src="https://image.tmdb.org/t/p/w500${poster_path}" loading="lazy" alt="${movieTitle}" />
-          <h2 class="movie-card__heading">${movieTitle}</h2>
-          <span class="movie-card__caption">${movieGenres} | ${releaseDate}</span>
-        </li>
-        `;
+          <li class="movie-card">
+            <img class="movie-card__img" src="${moviePoster}" loading="lazy" alt="${movieTitle}" />
+            <h2 class="movie-card__heading">${movieTitle}</h2>
+            <span class="movie-card__caption">${movieGenres} | ${releaseDate}</span>
+          </li>
+          `;
     })
     .join('');
 

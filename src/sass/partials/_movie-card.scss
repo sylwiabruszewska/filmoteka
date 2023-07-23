@@ -1,6 +1,8 @@
 .movie-card {
   margin-bottom: 20px;
   list-style-type: none;
+  display: flex;
+  flex-direction: column;
 
   @include mq(tablet) {
     width: calc((100% - 32px) / 2);
@@ -15,6 +17,7 @@
     width: 100%;
     border-radius: 5px;
     margin-bottom: 10px;
+    flex: 1;
 
     @include mq(tablet) {
       margin-bottom: 8px;
