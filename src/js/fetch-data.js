@@ -1,3 +1,6 @@
+import Notiflix from 'notiflix';
+import noMoviePoster from '../images/no-poster-available.jpg';
+
 const galleryOfMovies = document.querySelector('.movie-gallery');
 const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
 const BASE_URL = 'https://api.themoviedb.org/3';
@@ -26,15 +29,17 @@ async function renderMoviesCards(movies) {
         .filter(genreName => genreName)
         .join(', ');
 
-      const releaseDate = (release_date || first_air_date || 'Brak danych').slice(0, 4);
+      const releaseDate = (release_date || first_air_date || '').slice(0, 4);
       const movieTitle = title ? title : name;
+      const moviePoster =
+        poster_path != null ? `https://image.tmdb.org/t/p/w500${poster_path}` : noMoviePoster;
       return `
-        <li class="movie-card">
-          <img class="movie-card__img" src="https://image.tmdb.org/t/p/w500${poster_path}" loading="lazy" alt="${movieTitle}" />
-          <h2 class="movie-card__heading">${movieTitle}</h2>
-          <span class="movie-card__caption">${movieGenres} | ${releaseDate}</span>
-        </li>
-        `;
+          <li class="movie-card">
+            <img class="movie-card__img" src="${moviePoster}" loading="lazy" alt="${movieTitle}" />
+            <h2 class="movie-card__heading">${movieTitle}</h2>
+            <span class="movie-card__caption">${movieGenres} | ${releaseDate}</span>
+          </li>
+          `;
     })
     .join('');
 
@@ -47,8 +52,25 @@ async function fetchGenres() {
   return data.genres;
 }
 
-fetchMovies(page)
-  .then(renderMoviesCards)
-  .catch(error => console.error(error));
+async function loadMovies() {
+  try {
+    Notiflix.Block.arrows('.movie-gallery', {
+      svgSize: '80px',
+      svgColor: '#ff6b08',
+    });
+
+    // Opóźnij renderowanie o 2 sekundy - później skasować setTimeout
+    setTimeout(async () => {
+      const movies = await fetchMovies(page);
+      renderMoviesCards(movies);
+      Notiflix.Block.remove('.movie-gallery');
+    }, 2000);
+  } catch (error) {
+    console.error(error);
+    Notiflix.Block.remove('.movie-gallery');
+  }
+}
+
+loadMovies();
 
 export { fetchMovies, renderMoviesCards, fetchGenres };
