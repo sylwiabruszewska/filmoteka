@@ -14,7 +14,6 @@ $breakpoints: (
     }
   }
 }
-
 @mixin text($weight, $size, $line, $color) {
   font-weight: $weight;
   font-size: $size;
