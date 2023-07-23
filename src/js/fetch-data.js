@@ -1,3 +1,4 @@
+import Notiflix from 'notiflix';
 import noMoviePoster from '../images/no-poster-available.jpg';
 
 const galleryOfMovies = document.querySelector('.movie-gallery');
@@ -51,8 +52,25 @@ async function fetchGenres() {
   return data.genres;
 }
 
-fetchMovies(page)
-  .then(renderMoviesCards)
-  .catch(error => console.error(error));
+async function loadMovies() {
+  try {
+    Notiflix.Block.arrows('.movie-gallery', {
+      svgSize: '80px',
+      svgColor: '#ff6b08',
+    });
+
+    // Opóźnij renderowanie o 2 sekundy - później skasować setTimeout
+    setTimeout(async () => {
+      const movies = await fetchMovies(page);
+      renderMoviesCards(movies);
+      Notiflix.Block.remove('.movie-gallery');
+    }, 2000);
+  } catch (error) {
+    console.error(error);
+    Notiflix.Block.remove('.movie-gallery');
+  }
+}
+
+loadMovies();
 
 export { fetchMovies, renderMoviesCards, fetchGenres };
