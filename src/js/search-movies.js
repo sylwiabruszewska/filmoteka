@@ -1,4 +1,4 @@
-import { renderMoviesCards, fetchMovies } from './fetch-data';
+import { renderMoviesCards } from './fetch-data';
 
 const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
 const BASE_URL = 'https://api.themoviedb.org/3';
@@ -7,7 +7,6 @@ const galleryOfMovies = document.querySelector('.movie-gallery');
 const input = document.querySelector('.search-form__input');
 const searchBtn = document.querySelector('.search-form__button');
 searchBtn.addEventListener('click', searchMovies);
-const GENRE_LIST_PATH = `/genre/movie/list`;
 
 let page = 1;
 
