@@ -6,25 +6,20 @@ const SEARCH_MOVIE_PATH = `/search/movie`;
 const galleryOfMovies = document.querySelector('.movie-gallery');
 const input = document.querySelector('.search-form__input');
 const searchBtn = document.querySelector('.search-form__button');
-
 searchBtn.addEventListener('click', searchMovies);
+const GENRE_LIST_PATH = `/genre/movie/list`;
 
 let page = 1;
 
 export async function searchMovies(e) {
   e.preventDefault();
   const response = await fetch(
-    `${BASE_URL}${SEARCH_MOVIE_PATH}?api_key=${API_KEY}&query=${input.value}&page=${page}`,
+    `${BASE_URL}${SEARCH_MOVIE_PATH}?api_key=${API_KEY}&page=${page}&query=${input.value}`,
   );
   const data = await response.json();
-  fetchMovies(input.value)
-    .then(renderMoviesCards(data.results))
-    .catch(error => {
-      clearInterfaceUI();
-      alert('No results');
-    })
-    .finally((galleryOfMovies.innerHTML = ''));
-  return (galleryOfMovies.innerHTML = data.query[0]);
+  clearInterfaceUI();
+  renderMoviesCards(data.results);
+  return (galleryOfMovies.innerHTML = data.query = '');
 }
 
 function clearInterfaceUI() {
