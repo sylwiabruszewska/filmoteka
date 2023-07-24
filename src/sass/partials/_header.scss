@@ -1,6 +1,13 @@
 .page-header {
   background-color: $headerColor;
-  background-image: linear-gradient(to top, rgba(47, 48, 58, 0.4) 0%, rgba(0, 0, 0, 0.56) 100%), url("../images/background/header/mobile.png");
+
+  &__link {
+    text-decoration: none;
+    color: $whiteColor;
+  }
+
+  background-image: linear-gradient(to top, rgba(47, 48, 58, 0.4) 0%, rgba(0, 0, 0, 0.56) 100%),
+    url('../images/background/header/mobile.png');
   background-size: cover;
   background-position: center;
   padding-top: 40px;
@@ -9,10 +16,12 @@
   height: 230px;
   @include mq(tablet) {
     height: 216px;
-    background-image: linear-gradient(to top, rgba(47, 48, 58, 0.4) 0%, rgba(0, 0, 0, 0.56) 100%), url("../images/background/header/tablet.png");
+    background-image: linear-gradient(to top, rgba(47, 48, 58, 0.4) 0%, rgba(0, 0, 0, 0.56) 100%),
+      url('../images/background/header/tablet.png');
   }
   @include mq(desktop) {
-    background-image: linear-gradient(to top, rgba(47, 48, 58, 0.4) 0%, rgba(0, 0, 0, 0.56) 100%), url("../images/background/header/desktop.png");
+    background-image: linear-gradient(to top, rgba(47, 48, 58, 0.4) 0%, rgba(0, 0, 0, 0.56) 100%),
+      url('../images/background/header/desktop.png');
   }
   &__container {
     display: flex;
@@ -22,7 +31,6 @@
   }
 
   &__heading {
-    color: $whiteColor;
     font-weight: 500;
     font-size: 30px;
 
@@ -32,27 +40,30 @@
   }
 }
 @media (min-device-pixel-ratio: 2),
-(-webkit-min-device-pixel-ratio: 2),
-(min-resolution: 192dpi),
-(min-resolution: 2dppx) {
+  (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi),
+  (min-resolution: 2dppx) {
   .page-header {
-    background-image: linear-gradient(to top, rgba(47, 48, 58, 0.4) 0%, rgba(0, 0, 0, 0.56) 100%), url("../images/background/header/mobile_x2.png");
+    background-image: linear-gradient(to top, rgba(47, 48, 58, 0.4) 0%, rgba(0, 0, 0, 0.56) 100%),
+      url('../images/background/header/mobile_x2.png');
   }
 }
 @media screen and (min-width: 768px) and (min-device-pixel-ratio: 2),
-screen and (min-width: 768px) and (-webkit-min-device-pixel-ratio: 2),
-screen and (min-width: 768px) and (min-resolution: 192dpi),
-screen and (min-width: 768px) and (min-resolution: 2dppx) {
+  screen and (min-width: 768px) and (-webkit-min-device-pixel-ratio: 2),
+  screen and (min-width: 768px) and (min-resolution: 192dpi),
+  screen and (min-width: 768px) and (min-resolution: 2dppx) {
   .page-header {
-    background-image: linear-gradient(to top, rgba(47, 48, 58, 0.4) 0%, rgba(0, 0, 0, 0.56) 100%), url("../images/background/header/tablet_x2.png");
+    background-image: linear-gradient(to top, rgba(47, 48, 58, 0.4) 0%, rgba(0, 0, 0, 0.56) 100%),
+      url('../images/background/header/tablet_x2.png');
   }
 }
 @media screen and (min-width: 1280px) and (min-device-pixel-ratio: 2),
-screen and (min-width: 1280px) and (-webkit-min-device-pixel-ratio: 2),
-screen and (min-width: 1280px) and (min-resolution: 192dpi),
-screen and (min-width: 1280px) and (min-resolution: 2dppx) {
+  screen and (min-width: 1280px) and (-webkit-min-device-pixel-ratio: 2),
+  screen and (min-width: 1280px) and (min-resolution: 192dpi),
+  screen and (min-width: 1280px) and (min-resolution: 2dppx) {
   .page-header {
-    background-image: linear-gradient(to top, rgba(47, 48, 58, 0.4) 0%, rgba(0, 0, 0, 0.56) 100%), url("../images/background/header/desktop_x2.png");
+    background-image: linear-gradient(to top, rgba(47, 48, 58, 0.4) 0%, rgba(0, 0, 0, 0.56) 100%),
+      url('../images/background/header/desktop_x2.png');
   }
 }
 .box {
@@ -67,7 +78,7 @@ screen and (min-width: 1280px) and (min-resolution: 2dppx) {
   gap: 40px;
   list-style-type: none;
 
-    &__item {
+  &__item {
     display: block;
     text-decoration: none;
     color: #ffffff;
