@@ -21,9 +21,6 @@ async function renderMoviesCards(movies) {
 
   const markup = movies
     .map(({ poster_path, title, name, genre_ids, release_date, first_air_date }) => {
-      if (poster_path === null) {
-        return;
-      }
       const movieGenres = genre_ids
         .map(genreId => {
           const genre = genres.find(genre => genre.id === genreId);
