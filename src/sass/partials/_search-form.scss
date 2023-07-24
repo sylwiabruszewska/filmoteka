@@ -6,15 +6,46 @@
   line-height: 1.14;
   position: relative;
 
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 0.5px;
+    width: 100%;
+    background-color: $whiteColor;
+    transition: background-color $shiftInputMobile;
+  }
+
+  &:hover::before,
+  &:focus-within::before {
+    background-color: $redColor;
+  }
+
+  @include mq(desktop) {
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      height: 0.5px;
+      width: 0;
+      background-color: $redColor;
+      transition: width $shiftInputDesktop;
+    }
+
+    &:hover::after,
+    &:focus::after {
+      width: 100%;
+    }
+  }
+
   @include mq(tablet) {
     width: 336px;
   }
   @include mq(desktop) {
     width: 394px;
   }
-
-  // display: flex;
-  // justify-content: space-between;
 
   &__input {
     width: 100%;
@@ -24,7 +55,6 @@
     border: none;
     background-color: transparent;
     border: none;
-    border-bottom: 0.5px solid $whiteColor;
     padding-left: 0;
     padding-right: 0;
     padding-bottom: 4px;

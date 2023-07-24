@@ -1,6 +1,5 @@
-
-
-.btn-watched, .btn-queue {
+.btn-watched,
+.btn-queue {
   color: $whiteColor;
   background: transparent;
   width: 130px;
@@ -15,6 +14,7 @@
   padding-top: 14px;
   padding-bottom: 12px;
   text-transform: uppercase;
+  transition: all 0.3s ease;
 
   @include mq(tablet) {
     width: 152px;
@@ -29,5 +29,6 @@
   &:hover {
     border: 1px solid $secondColor;
     background-color: $secondColor;
+    cursor: pointer;
   }
 }
