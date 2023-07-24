@@ -7,6 +7,8 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 const MAIN_PAGE_PATH = '/trending/all/day';
 const GENRE_LIST_PATH = `/genre/movie/list`;
 
+let page = 1;
+
 async function fetchMovies(page) {
   const response = await fetch(`${BASE_URL}${MAIN_PAGE_PATH}?api_key=${API_KEY}&page=${page}`);
   const fetchMovies = await response.json();
@@ -69,6 +71,6 @@ async function loadMovies(page) {
   }
 }
 
-loadMovies();
+loadMovies(page);
 
 export { fetchMovies, renderMoviesCards, fetchGenres };
