@@ -1,5 +1,9 @@
 .page-header {
   background-color: $headerColor;
+  &__link {
+    text-decoration: none;
+    color: $whiteColor;
+  }
   background-image: linear-gradient(to top, rgba(47, 48, 58, 0.4) 0%, rgba(0, 0, 0, 0.56) 100%),
     url('../images/background/header/mobile.png');
   background-size: cover;
@@ -25,7 +29,6 @@
   }
 
   &__heading {
-    color: $whiteColor;
     font-weight: 500;
     font-size: 30px;
 
