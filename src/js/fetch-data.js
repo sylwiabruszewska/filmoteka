@@ -21,9 +21,6 @@ async function renderMoviesCards(movies) {
 
   const markup = movies
     .map(({ poster_path, title, name, genre_ids, release_date, first_air_date }) => {
-      if (poster_path === null) {
-        return;
-      }
       const movieGenres = genre_ids
         .map(genreId => {
           const genre = genres.find(genre => genre.id === genreId);
@@ -55,7 +52,7 @@ async function fetchGenres() {
   return data.genres;
 }
 
-async function loadMovies() {
+async function loadMovies(page) {
   try {
     Notiflix.Block.arrows('.movie-gallery', {
       svgSize: '80px',
@@ -74,6 +71,6 @@ async function loadMovies() {
   }
 }
 
-loadMovies();
+loadMovies(page);
 
 export { fetchMovies, renderMoviesCards, fetchGenres };
