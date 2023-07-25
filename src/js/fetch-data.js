@@ -37,7 +37,9 @@ async function renderMoviesCards(movies) {
         poster_path != null ? `https://image.tmdb.org/t/p/w500${poster_path}` : noMoviePoster;
       return `
           <li class="movie-card" data-id="${id}" data-modal-open>
+          <div class="movie-card__box">
             <img class="movie-card__img" src="${moviePoster}" data-img="${moviePoster}" loading="lazy" alt="${movieTitle}" />
+            </div>
             <h2 class="movie-card__heading">${movieTitle}</h2>
             <span class="movie-card__caption">${movieGenres} | ${releaseDate}</span>
           </li>
@@ -129,12 +131,18 @@ function addClickListenerToCards(cards) {
 
   cards.forEach(card => {
     card.addEventListener('click', async () => {
+      Notiflix.Block.arrows('.modal-movie', {
+        svgSize: '80px',
+        svgColor: '#ff6b08',
+        backgroundColor: '#ffffff',
+      });
+
       const movieId = card.dataset.id;
       const movieData = await fetchMovieById(movieId);
 
       // renderowanie danych
       modalTitle.textContent = movieData.title || movieData.name;
-      modalPoster.src = `https://image.tmdb.org/t/p/original/${movieData.poster_path}`;
+      modalPoster.src = `https://image.tmdb.org/t/p/w500${movieData.poster_path}`;
       modalVote.textContent = movieData.vote_average;
       // modalVoteCount.textContent = movieData.vote_count;
       modalPopularity.textContent = movieData.popularity;
@@ -142,6 +150,7 @@ function addClickListenerToCards(cards) {
       const genreNames = movieData.genres.map(genre => genre.name).join(', ');
       modalGenre.textContent = genreNames;
       modalDescription.textContent = movieData.overview;
+      Notiflix.Block.remove('.modal-movie');
 
       // otwórz modal
       backdrop.classList.remove('is-hidden');
@@ -150,23 +159,18 @@ function addClickListenerToCards(cards) {
       modalCloseButton.addEventListener('click', () => {
         backdrop.classList.add('is-hidden');
       });
-
-      resetMovieData();
     });
   });
-}
-
-function resetMovieData() {
-  modalTitle.textContent = '';
-  modalPoster.src = '';
-  modalVote.textContent = '';
-  modalVoteCount.textContent = '';
-  modalPopularity.textContent = '';
-  modalOriginalTitle.textContent = '';
-  modalGenre.textContent = '';
-  modalDescription.textContent = '';
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
   await loadMovies();
 });
+
+export {
+  renderMoviesCards,
+  fetchGenres,
+  fetchMovieById,
+  addModalListenerFunction,
+  addClickListenerToCards,
+};
