@@ -4,6 +4,21 @@
   display: flex;
   flex-direction: column;
 
+  &__box {
+    overflow: hidden;
+    position: relative;
+    border-radius: 5px;
+    max-height: 402px;
+
+    @include mq(tablet) {
+      max-height: 455px;
+    }
+
+    @include mq(desktop) {
+      max-height: 574px;
+    }
+  }
+
   @include mq(tablet) {
     width: calc((100% - 32px) / 2);
     margin-bottom: 0px;
@@ -18,6 +33,12 @@
     border-radius: 5px;
     margin-bottom: 10px;
     flex: 1;
+    transition: transform 0.4s;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.05);
+    }
 
     @include mq(tablet) {
       margin-bottom: 8px;
