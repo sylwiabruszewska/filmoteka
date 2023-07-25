@@ -23,6 +23,9 @@
     "posthtml-include": "^1.7.4"
   },
   "dependencies": {
-    "notiflix": "^3.2.6"
+    "api": "^6.1.0",
+    "axios": "^1.4.0",
+    "notiflix": "^3.2.6",
+    "simplelightbox": "^2.14.1"
   }
 }
