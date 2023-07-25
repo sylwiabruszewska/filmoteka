@@ -1,8 +1,7 @@
-import { renderMoviesCards, fetchGenres, fetchMovies, loadMovies } from './fetch-data';
+import { renderMoviesCards } from './fetch-data';
 import debounce from 'lodash.debounce';
 
 const DEBOUNCE_DELAY = 300;
-
 const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const SEARCH_MOVIE_PATH = `/search/movie`;

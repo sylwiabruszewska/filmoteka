@@ -52,7 +52,7 @@ async function fetchGenres() {
   return data.genres;
 }
 
-async function loadMovies() {
+async function loadMovies(page) {
   try {
     Notiflix.Block.arrows('.movie-gallery', {
       svgSize: '80px',
@@ -71,6 +71,6 @@ async function loadMovies() {
   }
 }
 
-loadMovies();
+loadMovies(page);
 
 export { fetchMovies, renderMoviesCards, fetchGenres };
