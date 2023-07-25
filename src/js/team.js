@@ -3,7 +3,7 @@ export const teamList = [
     name: 'Sebastian Parafjańczuk',
     role: 'Team Lead',
     github: 'https://github.com/SebastianPrf',
-    linkedin: 'https://www.linkedin.com/',
+    linkedin: 'https://www.linkedin.com/in/sebastian-parafjańczuk-a08ab6215',
     photo: 'https://ca.slack-edge.com/T04V0BAHQP6-U053K53S8LE-gcf609fafe9c-512',
   },
   {
