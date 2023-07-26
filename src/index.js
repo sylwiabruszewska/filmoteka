@@ -1,5 +1,5 @@
 import './sass/main.scss';
-// import './js/pagination.js';
+import './js/pagination';
 import './js/search-movies';
 import './js/fetch-data';
 import './js/team';
