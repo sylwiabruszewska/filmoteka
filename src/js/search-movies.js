@@ -12,6 +12,7 @@ const errorMsg = document.querySelector('.error-message');
 
 searchBtn.addEventListener('click', searchMovies);
 // input.addEventListener('input', debounce(searchMovies, DEBOUNCE_DELAY));
+// Funkcja wyszukiwania przy wpisywaniu, jeśli nie będzie potrzebna to ją usunę.
 
 let searchResultPage = 1;
 
