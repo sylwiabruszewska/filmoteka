@@ -133,7 +133,7 @@ async function addClickListenerToCards(cards) {
   const modalTitle = document.querySelector('.modal-movie__title');
   const modalPoster = document.querySelector('.modal-movie__poster');
   const modalVote = document.querySelector('.modal-movie__vote');
-  const modalVoteCount = document.querySelector('.modal-movie__vote-count');
+  // const modalVoteCount = document.querySelector('.modal-movie__vote-count');
   const modalPopularity = document.querySelector('.modal-movie__popularity');
   const modalOriginalTitle = document.querySelector('.modal-movie__original-title');
   const modalGenre = document.querySelector('.modal-movie__genre');
@@ -174,9 +174,10 @@ async function addClickListenerToCards(cards) {
   });
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-  await loadMovies(page);
-});
+////// WYKOMENTOWAĆ PRZY PAGINACJI ////////
+// document.addEventListener('DOMContentLoaded', async () => {
+//   await loadMovies(page);
+// });
 
 // fetchMovieById(615);
 
