@@ -12,6 +12,7 @@ let page = 1;
 async function fetchMovies(page) {
   const response = await fetch(`${BASE_URL}${MAIN_PAGE_PATH}?api_key=${API_KEY}&page=${page}`);
   const fetchMovies = await response.json();
+  console.log(fetchMovies);
   return fetchMovies.results;
 }
 
@@ -31,14 +32,15 @@ async function renderMoviesCards(movies) {
         .filter(genreName => genreName)
         .join(', ');
 
+      console.log(id);
       const releaseDate = (release_date || first_air_date || '').slice(0, 4);
       const movieTitle = title ? title : name;
       const moviePoster =
         poster_path != null ? `https://image.tmdb.org/t/p/w500${poster_path}` : noMoviePoster;
       return `
           <li class="movie-card" data-id="${id}" data-modal-open>
-          <div class="movie-card__box">
-            <img class="movie-card__img" src="${moviePoster}" data-img="${moviePoster}" loading="lazy" alt="${movieTitle}" />
+            <div class="movie-card__box">
+              <img class="movie-card__img" src="${moviePoster}" data-img="${moviePoster}" loading="lazy" alt="${movieTitle}" />
             </div>
             <h2 class="movie-card__heading">${movieTitle}</h2>
             <span class="movie-card__caption">${movieGenres} | ${releaseDate}</span>
@@ -57,7 +59,7 @@ async function fetchGenres() {
   return data.genres;
 }
 
-async function loadMovies() {
+async function loadMovies(page) {
   try {
     Notiflix.Block.arrows('.movie-gallery', {
       svgSize: '80px',
@@ -66,7 +68,7 @@ async function loadMovies() {
 
     // Opóźnij renderowanie o 2 sekundy - później skasować setTimeout
     setTimeout(async () => {
-      const movies = await fetchMovies(page);
+      const movies = await fetchMovies(1);
       renderMoviesCards(movies);
       Notiflix.Block.remove('.movie-gallery');
     }, 1000);
@@ -85,6 +87,14 @@ async function fetchMovieById(movieId) {
     const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`);
     const responseObject = await response.json();
     console.log(responseObject);
+    // console.log('Movie ID:', responseObject.id); // Wyświetl ID filmu w konsoli
+    // console.log('Poster Path:', responseObject.poster_path);
+    // console.log('Votes:', responseObject.vote_count);
+    // console.log('Popularity:', responseObject.popularity);
+    // console.log('Original Title:', responseObject.original_title || responseObject.original_name);
+    // const genreNames = responseObject.genres.map(genre => genre.name).join(', ');
+    // console.log('Genre:', genreNames);
+    // console.log('Description:', responseObject.overview);
     return responseObject;
   } catch (error) {
     console.error(error);
@@ -116,7 +126,7 @@ const addModalListenerFunction = () => {
 //   });
 // }
 
-function addClickListenerToCards(cards) {
+async function addClickListenerToCards(cards) {
   const backdrop = document.querySelector('.backdrop');
   const modalMovie = document.querySelector('.modal-movie');
   const modalCloseButton = document.querySelector('[data-modal-close]');
@@ -138,6 +148,7 @@ function addClickListenerToCards(cards) {
       });
 
       const movieId = card.dataset.id;
+      console.log(movieId);
       const movieData = await fetchMovieById(movieId);
 
       // renderowanie danych
@@ -164,8 +175,10 @@ function addClickListenerToCards(cards) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  await loadMovies();
+  await loadMovies(page);
 });
+
+// fetchMovieById(615);
 
 export {
   renderMoviesCards,
