@@ -36,12 +36,12 @@ async function renderMoviesCards(movies) {
       const moviePoster =
         poster_path != null ? `https://image.tmdb.org/t/p/w500${poster_path}` : noMoviePoster;
       return `
-          <li class="movie-card">
+        <li class="movie-card">
             <img class="movie-card__img" src="${moviePoster}" loading="lazy" alt="${movieTitle}" />
-            <h2 class="movie-card__heading">${movieTitle}</h2>
-            <span class="movie-card__caption">${movieGenres} | ${releaseDate}</span>
-          </li>
-          `;
+          <h2 class="movie-card__heading">${movieTitle}</h2>
+          <span class="movie-card__caption">${movieGenres} | ${releaseDate}</span>
+        </li>
+        `;
     })
     .join('');
 

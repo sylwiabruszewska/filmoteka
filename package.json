@@ -23,9 +23,7 @@
     "posthtml-include": "^1.7.4"
   },
   "dependencies": {
-    "api": "^6.1.0",
-    "axios": "^1.4.0",
-    "notiflix": "^3.2.6",
-    "simplelightbox": "^2.14.1"
+    "lodash.debounce": "^4.0.8",
+    "notiflix": "^3.2.6"
   }
 }
