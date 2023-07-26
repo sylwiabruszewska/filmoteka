@@ -11,8 +11,7 @@ const searchBtn = document.querySelector('.search-form__button');
 const errorMsg = document.querySelector('.error-message');
 
 searchBtn.addEventListener('click', searchMovies);
-
-input.addEventListener('input', debounce(searchMovies, DEBOUNCE_DELAY));
+// input.addEventListener('input', debounce(searchMovies, DEBOUNCE_DELAY));
 
 let searchResultPage = 1;
 
@@ -22,6 +21,11 @@ export async function searchMovies(e) {
     `${BASE_URL}${SEARCH_MOVIE_PATH}?api_key=${API_KEY}&page=${searchResultPage}&query=${input.value}`,
   );
   const data = await response.json();
+  if (input.value === '') {
+    errorMsg.style.display = 'flex';
+    errorMsg.textContent = 'What are we looking for?';
+    return;
+  }
   clearInterfaceUI();
   renderMoviesCards(data.results);
   galleryOfMovies.innerHTML = data.query = '';
