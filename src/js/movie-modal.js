@@ -3,7 +3,7 @@ import { getPosterLink } from './poster';
 
 function createModal(movie) {
   const modalMovieEl = document.querySelector('.modal-movie');
-  const backdrop = document.querySelector('.backdrop');
+  const backdrop = document.querySelector('.backdrop-movie');
 
   const modalMoviePosterBox = modalMovieEl.querySelector('.modal-movie__poster-box');
   const moviePoster = modalMoviePosterBox.querySelector('.modal-movie__poster');
