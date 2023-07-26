@@ -1,7 +1,5 @@
 import { renderMoviesCards } from './fetch-data';
-import debounce from 'lodash.debounce';
 
-const DEBOUNCE_DELAY = 300;
 const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const SEARCH_MOVIE_PATH = `/search/movie`;
@@ -11,8 +9,11 @@ const searchBtn = document.querySelector('.search-form__button');
 const errorMsg = document.querySelector('.error-message');
 
 searchBtn.addEventListener('click', searchMovies);
+
+// import debounce from 'lodash.debounce';
+// const DEBOUNCE_DELAY = 300;
 // input.addEventListener('input', debounce(searchMovies, DEBOUNCE_DELAY));
-// Funkcja wyszukiwania przy wpisywaniu, jeśli nie będzie potrzebna to ją usunę.
+///// Funkcja wyszukiwania przy wpisywaniu, jeśli nie będzie potrzebna to ją usunę.
 
 let searchResultPage = 1;
 
