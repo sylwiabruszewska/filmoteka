@@ -1,4 +1,4 @@
-.backdrop {
+.backdrop-movie {
   position: fixed;
   top: 0;
   right: 0;
@@ -16,7 +16,7 @@
   scrollbar-color: transparent transparent;
 }
 
-.is-hidden {
+.modal-movie-is-hidden {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;

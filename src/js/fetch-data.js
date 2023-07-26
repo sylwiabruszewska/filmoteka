@@ -51,7 +51,7 @@ async function renderMoviesCards(movies) {
     })
     .join('');
 
-  galleryOfMovies.insertAdjacentHTML('beforeend', markup);
+  galleryOfMovies.innerHTML = markup;
   addModalListenerFunction(); // nasłuchiwanie na kliknięcia po załadowaniu elementów
 }
 
@@ -90,14 +90,6 @@ async function fetchMovieById(movieId) {
     const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`);
     const responseObject = await response.json();
     console.log(responseObject);
-    // console.log('Movie ID:', responseObject.id); // Wyświetl ID filmu w konsoli
-    // console.log('Poster Path:', responseObject.poster_path);
-    // console.log('Votes:', responseObject.vote_count);
-    // console.log('Popularity:', responseObject.popularity);
-    // console.log('Original Title:', responseObject.original_title || responseObject.original_name);
-    // const genreNames = responseObject.genres.map(genre => genre.name).join(', ');
-    // console.log('Genre:', genreNames);
-    // console.log('Description:', responseObject.overview);
     return responseObject;
   } catch (error) {
     console.error(error);
@@ -105,11 +97,11 @@ async function fetchMovieById(movieId) {
   }
 }
 
-const addModalListenerFunction = () => {
+function addModalListenerFunction() {
   const movieCards = document.querySelectorAll('.movie-card');
-  console.log('znalezione elementy LI:', movieCards.length);
+  // console.log('znalezione elementy LI:', movieCards.length);
   addClickListenerToCards(movieCards);
-};
+}
 
 // PIERWSZA WERSJA Z CONSOLE LOG
 // function addClickListenerToCards(cards) {
@@ -130,7 +122,7 @@ const addModalListenerFunction = () => {
 // }
 
 async function addClickListenerToCards(cards) {
-  const backdrop = document.querySelector('.backdrop');
+  const backdrop = document.querySelector('.backdrop-movie');
   const modalMovie = document.querySelector('.modal-movie');
   const modalCloseButton = document.querySelector('[data-modal-close]');
   const modalTitle = document.querySelector('.modal-movie__title');
@@ -167,17 +159,18 @@ async function addClickListenerToCards(cards) {
       Notiflix.Block.remove('.modal-movie');
 
       // otwórz modal
-      backdrop.classList.remove('is-hidden');
+      backdrop.classList.remove('modal-movie-is-hidden');
+      console.log(backdrop);
 
       // zamknij modal po kliknięciu na btn close
       modalCloseButton.addEventListener('click', () => {
-        backdrop.classList.add('is-hidden');
+        backdrop.classList.add('modal-movie-is-hidden');
       });
     });
   });
 }
 
-////// WYKOMENTOWAĆ PRZY PAGINACJI ////////
+//// WYKOMENTOWAĆ PRZY PAGINACJI ////////
 // document.addEventListener('DOMContentLoaded', async () => {
 //   await loadMovies(page);
 // });
@@ -185,8 +178,10 @@ async function addClickListenerToCards(cards) {
 // fetchMovieById(615);
 
 export {
+  fetchMovies,
   renderMoviesCards,
   fetchGenres,
+  loadMovies,
   fetchMovieById,
   addModalListenerFunction,
   addClickListenerToCards,
