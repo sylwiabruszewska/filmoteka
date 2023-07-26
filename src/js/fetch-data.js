@@ -1,6 +1,8 @@
 import Notiflix from 'notiflix';
 import noMoviePoster from '../images/no-poster-available.jpg';
 
+import generatePagination from './pagination.js';
+
 const galleryOfMovies = document.querySelector('.movie-gallery');
 const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
 const BASE_URL = 'https://api.themoviedb.org/3';
@@ -63,6 +65,7 @@ async function loadMovies(page) {
     setTimeout(async () => {
       const movies = await fetchMovies(page);
       renderMoviesCards(movies);
+      // generatePagination();
       Notiflix.Block.remove('.movie-gallery');
     }, 2000);
   } catch (error) {
@@ -73,4 +76,4 @@ async function loadMovies(page) {
 
 loadMovies(page);
 
-export { fetchMovies, renderMoviesCards, fetchGenres };
+export { fetchMovies, renderMoviesCards, fetchGenres, loadMovies };
