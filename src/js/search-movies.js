@@ -25,7 +25,9 @@ export async function searchMovies(e) {
   const data = await response.json();
   if (input.value === '') {
     errorMsg.style.display = 'flex';
-    errorMsg.textContent = 'What are we looking for?';
+    errorMsg.textContent = 'What are we looking for?'
+      ? errorMsg.textContent
+      : 'Search result not successful. Enter the correct movie name';
     return;
   }
   clearInterfaceUI();
