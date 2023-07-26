@@ -45,7 +45,7 @@ async function renderMoviesCards(movies) {
     })
     .join('');
 
-  return galleryOfMovies.insertAdjacentHTML('beforeend', markup);
+  return (galleryOfMovies.innerHTML = markup);
 }
 
 async function fetchGenres() {
@@ -74,6 +74,6 @@ async function loadMovies(page) {
   }
 }
 
-loadMovies(page);
+// loadMovies(page);
 
-export { fetchMovies, renderMoviesCards, fetchGenres, loadMovies };
+export { fetchMovies, renderMoviesCards, fetchGenres, loadMovies, galleryOfMovies };
