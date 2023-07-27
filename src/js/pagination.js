@@ -1,13 +1,11 @@
-import { fetchMovies, renderMoviesCards, fetchGenres, loadMovies } from './fetch-data.js';
+import { loadMovies } from './fetch-data.js';
 
-console.log('paginacja');
-
-let page = 1;
+// let page = 1;
 let totalPages = 500;
 let currentPage = 1;
 
-let prevElement = null;
-let nextElement = null;
+// let prevElement = null;
+// let nextElement = null;
 
 //PAGINACJA
 const ulTag = document.querySelector('.pagination-ul');
@@ -18,6 +16,8 @@ const nextPage = document.querySelector('.plus-1');
 const lastPage = document.querySelector('.last');
 const nextButton = document.querySelector('.arrow__right');
 
+const galleryOfMovies = document.querySelector('.movie-gallery');
+
 function updatePagination() {
   currentPageElement.textContent = currentPage;
   nextPage.textContent = currentPage + 1;
@@ -26,18 +26,14 @@ function updatePagination() {
 
 // firstPage = page;
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('ladowanie api');
   loadMovies(currentPage);
-  console.log('zaladowano api');
   updatePagination();
-  console.log('paginacja');
 });
 
 prevButton.addEventListener('click', () => {
   if (currentPage > 1) {
     currentPage--;
     loadMovies(currentPage);
-    console.log('click prev btn');
     updatePagination();
   }
 });
@@ -46,7 +42,6 @@ nextPage.addEventListener('click', () => {
   if (currentPage >= 1) {
     currentPage++;
     loadMovies(currentPage);
-    console.log('click next page');
     updatePagination();
   }
 });
@@ -56,7 +51,6 @@ nextButton.addEventListener('click', () => {
     currentPage++;
     loadMovies(currentPage);
     updatePagination();
-    console.log('click next btn');
   }
 });
 

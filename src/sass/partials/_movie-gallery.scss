@@ -1,10 +1,17 @@
 .movie-gallery {
   margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   @include mq(tablet) {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     gap: 32px;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 
   @include mq(desktop) {
