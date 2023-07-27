@@ -63,7 +63,7 @@ async function fetchGenres() {
 
 async function loadMovies(page) {
   try {
-    Notiflix.Block.arrows('.movie-gallery', {
+    Notiflix.Block.arrows('.is-loading', {
       svgSize: '80px',
       svgColor: '#ff6b08',
     });
@@ -73,11 +73,11 @@ async function loadMovies(page) {
       const movies = await fetchMovies(page);
       renderMoviesCards(movies);
       // generatePagination();
-      Notiflix.Block.remove('.movie-gallery');
+      Notiflix.Block.remove('.is-loading');
     }, 1000);
   } catch (error) {
     console.error(error);
-    Notiflix.Block.remove('.movie-gallery');
+    Notiflix.Block.remove('.is-loading');
   }
 }
 
