@@ -9,12 +9,12 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 const MAIN_PAGE_PATH = '/trending/all/day';
 const GENRE_LIST_PATH = `/genre/movie/list`;
 
-let page = 1;
+// let page = 1;
 
 async function fetchMovies(page) {
   const response = await fetch(`${BASE_URL}${MAIN_PAGE_PATH}?api_key=${API_KEY}&page=${page}`);
   const fetchMovies = await response.json();
-  console.log(fetchMovies);
+  // console.log(fetchMovies);
   return fetchMovies.results;
 }
 
@@ -34,7 +34,7 @@ async function renderMoviesCards(movies) {
         .filter(genreName => genreName)
         .join(', ');
 
-      console.log(id);
+      // console.log(id);
       const releaseDate = (release_date || first_air_date || '').slice(0, 4);
       const movieTitle = title ? title : name;
       const moviePoster =
@@ -70,7 +70,7 @@ async function loadMovies(page) {
 
     // Opóźnij renderowanie o 2 sekundy - później skasować setTimeout
     setTimeout(async () => {
-      const movies = await fetchMovies(1);
+      const movies = await fetchMovies(page);
       renderMoviesCards(movies);
       // generatePagination();
       Notiflix.Block.remove('.movie-gallery');
@@ -89,7 +89,7 @@ async function fetchMovieById(movieId) {
   try {
     const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`);
     const responseObject = await response.json();
-    console.log(responseObject);
+    // console.log(responseObject);
     return responseObject;
   } catch (error) {
     console.error(error);
@@ -143,7 +143,7 @@ async function addClickListenerToCards(cards) {
       });
 
       const movieId = card.dataset.id;
-      console.log(movieId);
+      // console.log(movieId);
       const movieData = await fetchMovieById(movieId);
 
       // renderowanie danych
@@ -160,7 +160,7 @@ async function addClickListenerToCards(cards) {
 
       // otwórz modal
       backdrop.classList.remove('modal-movie-is-hidden');
-      console.log(backdrop);
+      // console.log(backdrop);
 
       // zamknij modal po kliknięciu na btn close
       modalCloseButton.addEventListener('click', () => {
