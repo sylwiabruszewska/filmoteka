@@ -66,8 +66,8 @@ async function loadMovies(page) {
     setTimeout(async () => {
       const movies = await fetchMovies(page);
       renderMoviesCards(movies);
-      Notiflix.Block.remove('.movie-gallery');
-    }, 2000);
+    //   Notiflix.Block.remove('.movie-gallery');
+    // }, 2000);
       Notiflix.Block.remove('.is-loading');
     }, 1000);
   } catch (error) {
