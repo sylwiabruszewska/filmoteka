@@ -63,7 +63,7 @@ async function fetchGenres() {
 
 async function loadMovies(page) {
   try {
-    Notiflix.Block.arrows('.movie-gallery', {
+    Notiflix.Block.arrows('.is-loading', {
       svgSize: '80px',
       svgColor: '#ff6b08',
     });
@@ -73,11 +73,11 @@ async function loadMovies(page) {
       const movies = await fetchMovies(page);
       renderMoviesCards(movies);
       // generatePagination();
-      Notiflix.Block.remove('.movie-gallery');
+      Notiflix.Block.remove('.is-loading');
     }, 1000);
   } catch (error) {
     console.error(error);
-    Notiflix.Block.remove('.movie-gallery');
+    Notiflix.Block.remove('.is-loading');
   }
 }
 
@@ -123,7 +123,7 @@ function addModalListenerFunction() {
 
 async function addClickListenerToCards(cards) {
   const backdrop = document.querySelector('.backdrop-movie');
-  const modalMovie = document.querySelector('.modal-movie');
+  // const modalMovie = document.querySelector('.modal-movie');
   const modalCloseButton = document.querySelector('[data-modal-close]');
   const modalTitle = document.querySelector('.modal-movie__title');
   const modalPoster = document.querySelector('.modal-movie__poster');
@@ -166,6 +166,32 @@ async function addClickListenerToCards(cards) {
       modalCloseButton.addEventListener('click', () => {
         backdrop.classList.add('modal-movie-is-hidden');
       });
+
+      //MIKI dodaje kod do zamykania na ESC i clik poza modal
+      
+      
+      
+      //MIKI dodaje kod do zamykania na ESC i clik poza modal
+      const closeMovieModal = () => {
+        backdrop.classList.add('modal-movie-is-hidden');
+      };
+      
+      const closeMovieModalOnEsc = e => {
+        if (e.key === 'Escape') {
+          closeMovieModal();
+        }
+        window.removeEventListener('keydown', closeMovieModalOnEsc);
+      };
+      window.addEventListener('keydown', closeMovieModalOnEsc);
+      
+      backdrop.addEventListener('click', onOutsideMovieModalClick);
+      function onOutsideMovieModalClick(e) {
+        if (e.target === backdrop) {
+          closeMovieModal();
+        }
+        backdrop.removeEventListener('click', onOutsideMovieModalClick);
+}
+     
     });
   });
 }

@@ -5,6 +5,7 @@ const refs = {
   modalRef: document.querySelector('.modal__wrap'),
   teamRef: document.querySelector('.team__wrap'),
   closeModalButton: document.querySelector('.modal__btn-close'),
+  backdropTeam: document.querySelector('.backdrop'),
 };
 
 refs.footerLink.addEventListener('click', onOpenModal);
@@ -53,12 +54,13 @@ function onOpenModal(e) {
   window.addEventListener('keydown', onEscKeyPress);
   refs.closeModalButton.addEventListener('click', onCloseModal);
   loadIntoTeamModal(teamList);
-  document.addEventListener('click', onOutsideClick);
+  // document.addEventListener('click', onOutsideClick);
+  refs.backdropTeam.addEventListener('click', onOutsideClick);
 }
 
 function onOutsideClick(e) {
-  if (!e.target.closest('.modal-team') && !e.target.classList.contains('footer__team')) {
-    onCloseModal();
+  if (e.target === refs.backdropTeam) {
+        onCloseModal();
   }
 }
 
