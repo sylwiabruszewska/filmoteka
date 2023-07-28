@@ -36,31 +36,31 @@ function createModal(movie) {
   modalMovieBtnTrailer.setAttribute('data-id', movie.id);
   modalMovieBtnTrailer.setAttribute('data-btn', 'watchTrailer');
 
-  closeModalBtn.addEventListener('click', () => {
-    closeBackdrop();
-  });
+  // closeModalBtn.addEventListener('click', () => {
+  //   closeBackdrop();
+  // });
 
-  backdrop.addEventListener('click', event => {
-    if (event.target === backdrop) {
-      closeBackdrop();
-    }
-  });
+  // backdrop.addEventListener('click', event => {
+  //   if (event.target === backdrop) {
+  //     closeBackdrop();
+  //   }
+  // });
 
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') {
-      closeBackdrop();
-    }
-  });
+  // document.addEventListener('keydown', event => {
+  //   if (event.key === 'Escape') {
+  //     closeBackdrop();
+  //   }
+  // });
 
   function closeBackdrop() {
-    backdrop.classList.add('is-hidden');
+    // backdrop.classList.add('is-hidden');
   }
 }
 
 function openModal(movie) {
-  createModal(movie);
-  const backdrop = document.querySelector('.backdrop');
-  backdrop.classList.remove('is-hidden');
+  // createModal(movie);
+  // const backdrop = document.querySelector('.backdrop');
+  // backdrop.classList.remove('is-hidden');
 }
 
 export { openModal };

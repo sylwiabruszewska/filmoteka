@@ -35,6 +35,7 @@ function sumMovieIds() {
 
 sumMovieIds();
 
+
 //SZUKANIE ELEMENTÓW
 const prevButton = document.querySelector('.arrow__left');
 const firstPage = document.querySelector('.first');
@@ -47,6 +48,8 @@ const nextPage2 = document.querySelector('.plus-2');
 const dotsPageLast = document.querySelector('.dots__last');
 const lastPage = document.querySelector('.last');
 const nextButton = document.querySelector('.arrow__right');
+
+const galleryOfMovies = document.querySelector('.movie-gallery');
 
 function updatePagination() {
   prevPage2.textContent = currentPage - 2;
@@ -88,7 +91,7 @@ function normalizeBeforeAfterPages() {
     showElement(dotsPageLast);
     showElement(lastPage);
     loadMovies(currentPage);
-    console.log('strona 1 NORM');
+
     updatePagination();
   }
   if (currentPage === 2) {
@@ -102,7 +105,7 @@ function normalizeBeforeAfterPages() {
     showElement(dotsPageLast);
     showElement(lastPage);
     loadMovies(currentPage);
-    console.log('strona 2 NORM');
+
     updatePagination();
   }
   if (currentPage === 3) {
