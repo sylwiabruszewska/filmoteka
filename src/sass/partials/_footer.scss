@@ -15,10 +15,6 @@
 }
 
 .footer {
-  &__part {
-    @include flex-center;
-  }
-
   &__icon {
     fill: $primaryColor;
     margin-right: 10px;

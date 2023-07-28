@@ -9,6 +9,10 @@
   gap: 16px;
 }
 
+.pagination li.hidden {
+  display: none;
+}
+
 .pagination ul li {
   display: flex;
   color: #000000;
