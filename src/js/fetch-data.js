@@ -181,6 +181,7 @@ async function addClickListenerToCards(cards) {
       };
       window.addEventListener('keydown', closeMovieModalOnEsc);
 
+      backdrop.addEventListener('mousedown', onOutsideMovieModalClick);
       backdrop.addEventListener('click', onOutsideMovieModalClick);
       function onOutsideMovieModalClick(e) {
         if (e.target === backdrop) {
