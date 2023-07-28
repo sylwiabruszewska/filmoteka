@@ -1,20 +1,15 @@
 import Notiflix from 'notiflix';
 import noMoviePoster from '../images/no-poster-available.jpg';
 
-import generatePagination from './pagination.js';
-
 const galleryOfMovies = document.querySelector('.movie-gallery');
 const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const MAIN_PAGE_PATH = '/trending/all/day';
 const GENRE_LIST_PATH = `/genre/movie/list`;
 
-// let page = 1;
-
 async function fetchMovies(page) {
   const response = await fetch(`${BASE_URL}${MAIN_PAGE_PATH}?api_key=${API_KEY}&page=${page}`);
   const fetchMovies = await response.json();
-  // console.log(fetchMovies);
   return fetchMovies.results;
 }
 
@@ -34,7 +29,6 @@ async function renderMoviesCards(movies) {
         .filter(genreName => genreName)
         .join(', ');
 
-      // console.log(id);
       const releaseDate = (release_date || first_air_date || '').slice(0, 4);
       const movieTitle = title ? title : name;
       const moviePoster =
@@ -68,11 +62,10 @@ async function loadMovies(page) {
       svgColor: '#ff6b08',
     });
 
-    // Opóźnij renderowanie o 2 sekundy - później skasować setTimeout
+    // Opóźnij renderowanie o 1sek - później skasować setTimeout
     setTimeout(async () => {
       const movies = await fetchMovies(page);
       renderMoviesCards(movies);
-      // generatePagination();
       Notiflix.Block.remove('.is-loading');
     }, 1000);
   } catch (error) {
@@ -89,7 +82,6 @@ async function fetchMovieById(movieId) {
   try {
     const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`);
     const responseObject = await response.json();
-    // console.log(responseObject);
     return responseObject;
   } catch (error) {
     console.error(error);
@@ -99,31 +91,11 @@ async function fetchMovieById(movieId) {
 
 function addModalListenerFunction() {
   const movieCards = document.querySelectorAll('.movie-card');
-  // console.log('znalezione elementy LI:', movieCards.length);
   addClickListenerToCards(movieCards);
 }
 
-// PIERWSZA WERSJA Z CONSOLE LOG
-// function addClickListenerToCards(cards) {
-//   cards.forEach(card => {
-//     card.addEventListener('click', async () => {
-//       const movieId = card.dataset.id;
-//       const movieData = await fetchMovieById(movieId);
-//       console.log('Movie ID:', movieData.id); // Wyświetl ID filmu w konsoli
-//       console.log('Poster Path:', movieData.poster_path);
-//       console.log('Votes:', movieData.vote_count);
-//       console.log('Popularity:', movieData.popularity);
-//       console.log('Original Title:', movieData.original_title || movieData.original_name);
-//       const genreNames = movieData.genres.map(genre => genre.name).join(', ');
-//       console.log('Genre:', genreNames);
-//       console.log('Description:', movieData.overview);
-//     });
-//   });
-// }
-
 async function addClickListenerToCards(cards) {
   const backdrop = document.querySelector('.backdrop-movie');
-  // const modalMovie = document.querySelector('.modal-movie');
   const modalCloseButton = document.querySelector('[data-modal-close]');
   const modalTitle = document.querySelector('.modal-movie__title');
   const modalPoster = document.querySelector('.modal-movie__poster');
@@ -143,7 +115,6 @@ async function addClickListenerToCards(cards) {
       });
 
       const movieId = card.dataset.id;
-      // console.log(movieId);
       const movieData = await fetchMovieById(movieId);
 
       // renderowanie danych
@@ -160,7 +131,6 @@ async function addClickListenerToCards(cards) {
 
       // otwórz modal
       backdrop.classList.remove('modal-movie-is-hidden');
-      // console.log(backdrop);
 
       // zamknij modal po kliknięciu na btn close
       modalCloseButton.addEventListener('click', () => {
@@ -168,14 +138,10 @@ async function addClickListenerToCards(cards) {
       });
 
       //MIKI dodaje kod do zamykania na ESC i clik poza modal
-      
-      
-      
-      //MIKI dodaje kod do zamykania na ESC i clik poza modal
       const closeMovieModal = () => {
         backdrop.classList.add('modal-movie-is-hidden');
       };
-      
+
       const closeMovieModalOnEsc = e => {
         if (e.key === 'Escape') {
           closeMovieModal();
@@ -183,25 +149,17 @@ async function addClickListenerToCards(cards) {
         window.removeEventListener('keydown', closeMovieModalOnEsc);
       };
       window.addEventListener('keydown', closeMovieModalOnEsc);
-      
+
       backdrop.addEventListener('click', onOutsideMovieModalClick);
       function onOutsideMovieModalClick(e) {
         if (e.target === backdrop) {
           closeMovieModal();
         }
         backdrop.removeEventListener('click', onOutsideMovieModalClick);
-}
-     
+      }
     });
   });
 }
-
-//// WYKOMENTOWAĆ PRZY PAGINACJI ////////
-// document.addEventListener('DOMContentLoaded', async () => {
-//   await loadMovies(page);
-// });
-
-// fetchMovieById(615);
 
 export {
   fetchMovies,
