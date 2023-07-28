@@ -100,7 +100,7 @@ async function addClickListenerToCards(cards) {
   const modalTitle = document.querySelector('.modal-movie__title');
   const modalPoster = document.querySelector('.modal-movie__poster');
   const modalVote = document.querySelector('.modal-movie__vote');
-  // const modalVoteCount = document.querySelector('.modal-movie__vote-count');
+  const modalVoteCount = document.querySelector('.modal-movie__vote_count');
   const modalPopularity = document.querySelector('.modal-movie__popularity');
   const modalOriginalTitle = document.querySelector('.modal-movie__original-title');
   const modalGenre = document.querySelector('.modal-movie__genre');
@@ -121,7 +121,7 @@ async function addClickListenerToCards(cards) {
       modalTitle.textContent = movieData.title || movieData.name;
       modalPoster.src = `https://image.tmdb.org/t/p/w500${movieData.poster_path}`;
       modalVote.textContent = movieData.vote_average;
-      // modalVoteCount.textContent = movieData.vote_count;
+      modalVoteCount.textContent = movieData.vote_count;
       modalPopularity.textContent = movieData.popularity;
       modalOriginalTitle.textContent = movieData.original_title || movieData.original_name;
       const genreNames = movieData.genres.map(genre => genre.name).join(', ');
