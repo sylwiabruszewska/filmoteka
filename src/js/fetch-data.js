@@ -22,25 +22,23 @@ async function renderMoviesCards(movies) {
   const genres = await fetchGenres();
 
   const markup = movies
-    .map(({ poster_path, title, name, genre_ids, id, release_date, first_air_date }) => {
-      if (poster_path === null) {
-        return;
-      }
-      const movieGenres = genre_ids
-        .map(genreId => {
-          const genre = genres.find(genre => genre.id === genreId);
-          return genre ? genre.name : null;
-        })
-        .filter(genreName => genreName)
-        .join(', ');
+    .map(
+      ({ poster_path, title, name, genre_ids, id, media_type, release_date, first_air_date }) => {
+        const movieGenres = genre_ids
+          .map(genreId => {
+            const genre = genres.find(genre => genre.id === genreId);
+            return genre ? genre.name : null;
+          })
+          .filter(genreName => genreName)
+          .join(', ');
 
-      // console.log(id);
-      const releaseDate = (release_date || first_air_date || '').slice(0, 4);
-      const movieTitle = title ? title : name;
-      const moviePoster =
-        poster_path != null ? `https://image.tmdb.org/t/p/w500${poster_path}` : noMoviePoster;
-      return `
-          <li class="movie-card" data-id="${id}" data-modal-open>
+        // console.log(id);
+        const releaseDate = (release_date || first_air_date || '').slice(0, 4);
+        const movieTitle = title ? title : name;
+        const moviePoster =
+          poster_path != null ? `https://image.tmdb.org/t/p/w500${poster_path}` : noMoviePoster;
+        return `
+          <li class="movie-card" data-id="${id}" data-type="${media_type}" data-modal-open>
             <div class="movie-card__box">
               <img class="movie-card__img" src="${moviePoster}" data-img="${moviePoster}" loading="lazy" alt="${movieTitle}" />
             </div>
@@ -48,7 +46,8 @@ async function renderMoviesCards(movies) {
             <span class="movie-card__caption">${movieGenres} | ${releaseDate}</span>
           </li>
           `;
-    })
+      },
+    )
     .join('');
 
   galleryOfMovies.innerHTML = markup;
@@ -168,14 +167,12 @@ async function addClickListenerToCards(cards) {
       });
 
       //MIKI dodaje kod do zamykania na ESC i clik poza modal
-      
-      
-      
+
       //MIKI dodaje kod do zamykania na ESC i clik poza modal
       const closeMovieModal = () => {
         backdrop.classList.add('modal-movie-is-hidden');
       };
-      
+
       const closeMovieModalOnEsc = e => {
         if (e.key === 'Escape') {
           closeMovieModal();
@@ -183,15 +180,14 @@ async function addClickListenerToCards(cards) {
         window.removeEventListener('keydown', closeMovieModalOnEsc);
       };
       window.addEventListener('keydown', closeMovieModalOnEsc);
-      
+
       backdrop.addEventListener('click', onOutsideMovieModalClick);
       function onOutsideMovieModalClick(e) {
         if (e.target === backdrop) {
           closeMovieModal();
         }
         backdrop.removeEventListener('click', onOutsideMovieModalClick);
-}
-     
+      }
     });
   });
 }
