@@ -168,14 +168,12 @@ async function addClickListenerToCards(cards) {
       });
 
       //MIKI dodaje kod do zamykania na ESC i clik poza modal
-      
-      
-      
+
       //MIKI dodaje kod do zamykania na ESC i clik poza modal
       const closeMovieModal = () => {
         backdrop.classList.add('modal-movie-is-hidden');
       };
-      
+
       const closeMovieModalOnEsc = e => {
         if (e.key === 'Escape') {
           closeMovieModal();
@@ -183,15 +181,14 @@ async function addClickListenerToCards(cards) {
         window.removeEventListener('keydown', closeMovieModalOnEsc);
       };
       window.addEventListener('keydown', closeMovieModalOnEsc);
-      
-      backdrop.addEventListener('click', onOutsideMovieModalClick);
+
+      backdrop.addEventListener('mousedown', onOutsideMovieModalClick);
       function onOutsideMovieModalClick(e) {
         if (e.target === backdrop) {
           closeMovieModal();
         }
         backdrop.removeEventListener('click', onOutsideMovieModalClick);
-}
-     
+      }
     });
   });
 }
