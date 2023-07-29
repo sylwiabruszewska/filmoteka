@@ -1,16 +1,19 @@
 .pagination {
-  @include flex-center;
+  margin: 0 auto;
   margin-bottom: 60px;
+  @include mq(tablet) {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .pagination ul {
   display: flex;
   background: #fff;
-  gap: 16px;
-}
-
-.pagination li.hidden {
-  display: none;
+  justify-content: space-between;
+  @include mq(tablet) {
+    gap: 16px;
+  }
 }
 
 .pagination ul li {
@@ -30,11 +33,24 @@
   border-radius: 5px 5px 5px 5px;
 }
 
-.pagination ul li.dots {
+ul li.dots,
+ul li.dots__last {
+  display: none;
   font-size: 12px;
   font-weight: 500;
   line-height: 16px;
   cursor: default;
+  @include mq(tablet) {
+    display: flex;
+  }
+}
+
+ul li.first,
+ul li.last {
+  display: none;
+  @include mq(tablet) {
+    display: flex;
+  }
 }
 
 .pagination ul li.btn {
@@ -42,11 +58,16 @@
   padding: 12px 12px;
 }
 
-.pagination ul li.numb:hover,
-.pagination ul li.active,
-.pagination ul li.btn:hover {
+.pagination ul li.active {
   color: #fff;
   background: #ff6b08;
+}
+
+.pagination ul li.btn:hover .pagination ul li.numb:hover {
+  @include mq(tablet) {
+    color: #fff;
+    background: #ff6b08;
+  }
 }
 
 .arrow__left--icon {
@@ -60,4 +81,8 @@
   width: 20px;
   fill: #000000;
   rotate: 180deg;
+}
+
+.pagination li.hidden {
+  display: none;
 }
