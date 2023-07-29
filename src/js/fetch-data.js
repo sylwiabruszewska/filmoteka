@@ -27,7 +27,6 @@ async function renderMoviesCards(movies) {
           .filter(genreName => genreName)
           .join(', ');
 
-        // console.log(id);
         const releaseDate = (release_date || first_air_date || '').slice(0, 4);
         const movieTitle = title ? title : name;
         const moviePoster =
@@ -66,8 +65,6 @@ async function loadMovies(page) {
     setTimeout(async () => {
       const movies = await fetchMovies(page);
       renderMoviesCards(movies);
-    //   Notiflix.Block.remove('.movie-gallery');
-    // }, 2000);
       Notiflix.Block.remove('.is-loading');
     }, 1000);
   } catch (error) {
@@ -80,9 +77,9 @@ async function loadMovies(page) {
 // FETCH MOVIE BY ID
 ///////////////////////////////////
 
-async function fetchMovieById(movieId) {
+async function fetchMovieById(movieId, type) {
   try {
-    const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`);
+    const response = await fetch(`${BASE_URL}/${type}/${movieId}?api_key=${API_KEY}`);
     const responseObject = await response.json();
     return responseObject;
   } catch (error) {
@@ -117,7 +114,8 @@ async function addClickListenerToCards(cards) {
       });
 
       const movieId = card.dataset.id;
-      const movieData = await fetchMovieById(movieId);
+      const mediaType = card.dataset.type;
+      const movieData = await fetchMovieById(movieId, mediaType);
 
       // renderowanie danych
       modalTitle.textContent = movieData.title || movieData.name;
@@ -152,7 +150,7 @@ async function addClickListenerToCards(cards) {
         window.removeEventListener('keydown', closeMovieModalOnEsc);
       };
       window.addEventListener('keydown', closeMovieModalOnEsc);
-      
+
       backdrop.addEventListener('mousedown', onOutsideMovieModalClick);
       backdrop.addEventListener('click', onOutsideMovieModalClick);
       function onOutsideMovieModalClick(e) {
