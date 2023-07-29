@@ -1,0 +1,77 @@
+<div class="firebase__modal" id="login-modal">
+  
+  <div class="login-form__modal firebase__content--login" id="login-content">
+    <button type="button" class="login-form__btn-close" id="login-close">&times</button>
+
+    <h1 class="login-form__title">Login</h1>
+    <form id="login-form">
+      <div>
+        <input
+          class="login-form__input"
+          type="text"
+          name="email"
+          placeholder="Email"
+          id="login-email"
+        />
+      </div>
+      <div>
+        <input
+          class="login-form__input"
+          type="password"
+          name="password"
+          placeholder="Password"
+          id="login-password"
+        />
+      </div>
+      <button class="login-form__button-submit" id="" type="submit">Sign In</button>
+      <div class="member">Not A Memeber?<a id="signup__anchor" href="#">Signup Here!</a></div>
+    </form>
+  </div>
+</div>
+<!-- </div> -->
+
+<!-- modal rejestracji -->
+<div class="firebase__modal" id="signup-modal">
+  <div class="signup-form__modal">
+    <button class="login-form__btn-close" id="signup-close">&times</button>
+
+    <div class="sign-up__modal firebase__content--signup">
+      <h1>Sign Up</h1>
+      <form " id="form-signup">
+        <input type="text" name="" placeholder="Full Name" id="fullname" />
+
+        <input type="email" name="" placeholder="Email" id="email" />
+
+        <input type="password" name="" placeholder="Password" id="password" />
+
+        <div>
+          <input type="password" name="" placeholder="Confirm Password" id="copassword" />
+
+          <button type="submit" id="signup" value="Sign Up" class="btn">Sign Up</button>
+
+          <div class="member">
+            Already A Memeber?<a class="login__anchor" href="#">Login Here!</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- powitanie i przycisk wylogowania -->
+
+<div class="firebase__modal" id="user-modal">
+  <div class="user__modal">
+    <button class="login-form__btn-close" id="user-close">&times</button>
+
+    <div class="user__modalfirebase__content--logout">
+      <button type="button" value="logout" class="user-logout__btn" 
+       
+      id="logout-btn__modal">
+        logout
+      </button>
+    </div>
+    <div class="main">
+      <h1>Hello, <span id="user"> </span> <span class="text">You are logged in !</span></h1>
+    </div>
+  </div>
+</div>
