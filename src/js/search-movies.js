@@ -1,4 +1,5 @@
 import { renderMoviesCards } from './fetch-data';
+import { updatePagination, fetchTotalResults, totalPages, runAsync } from './pagination';
 import debounce from 'lodash.debounce';
 
 const DEBOUNCE_DELAY = 300;
@@ -17,8 +18,8 @@ searchBtn.addEventListener('click', searchMovies);
 // input.addEventListener('input', debounce(searchMovies, DEBOUNCE_DELAY));
 ///// Funkcja wyszukiwania przy wpisywaniu, jeśli nie będzie potrzebna to ją usunę.
 
-
 let searchResultPage = 1;
+export let currentTotalResults = 0; //paginacja
 
 export async function searchMovies(e) {
   e.preventDefault();
@@ -26,6 +27,12 @@ export async function searchMovies(e) {
     `${BASE_URL}${SEARCH_MOVIE_PATH}?api_key=${API_KEY}&page=${searchResultPage}&query=${input.value}`,
   );
   const data = await response.json();
+  fetchTotalResults(); //paginacja
+  currentTotalResults = data.total_results; //paginacja
+  totalPages = Math.ceil(data.total_results / data.results.length); //paginacja
+  console.log(totalPages); //paginacja
+  updatePagination(); //paginacja
+  runAsync(); //paginacja
   if (input.value === '') {
     errorMsg.style.display = 'flex';
     errorMsg.textContent = 'What are we looking for?'
