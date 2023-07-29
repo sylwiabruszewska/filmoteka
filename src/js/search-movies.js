@@ -1,7 +1,6 @@
-import { renderMoviesCards } from './fetch-data';
-import debounce from 'lodash.debounce';
+import { renderMoviesCards, loadMovies } from './fetch-data';
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
 
-const DEBOUNCE_DELAY = 300;
 const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const SEARCH_MOVIE_PATH = `/search/movie`;
@@ -17,7 +16,6 @@ searchBtn.addEventListener('click', searchMovies);
 // input.addEventListener('input', debounce(searchMovies, DEBOUNCE_DELAY));
 ///// Funkcja wyszukiwania przy wpisywaniu, jeśli nie będzie potrzebna to ją usunę.
 
-
 let searchResultPage = 1;
 
 export async function searchMovies(e) {
@@ -28,14 +26,16 @@ export async function searchMovies(e) {
   const data = await response.json();
   if (input.value === '') {
     errorMsg.style.display = 'flex';
-    errorMsg.textContent = 'What are we looking for?'
-      ? errorMsg.textContent
-      : 'Search result not successful. Enter the correct movie name';
+    errorMsg.textContent = 'What are we looking for?';
     return;
+  } else {
+    errorMsg.textContent = 'Search result not successful. Enter the correct movie name';
   }
   clearInterfaceUI();
+
   renderMoviesCards(data.results);
   galleryOfMovies.innerHTML = data.query = '';
+  Loading.remove();
   if (data.results == 0) {
     errorMsg.style.display = 'flex';
   } else {
@@ -46,4 +46,7 @@ export async function searchMovies(e) {
 
 function clearInterfaceUI() {
   galleryOfMovies.innerHTML = '';
+  Loading.arrows({
+    svgColor: '#ff6b08',
+  });
 }
