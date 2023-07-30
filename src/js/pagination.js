@@ -1,4 +1,5 @@
 import { loadMovies } from './fetch-data.js';
+import { currentTotalResults } from './search-movies.js';
 
 const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
 const BASE_URL = 'https://api.themoviedb.org/3';
@@ -6,35 +7,44 @@ const MOVIE_POPULAR_PATH = '/movie/popular';
 
 console.log('paginacja');
 
-let totalPages = 500;
-//let totalResults = sumMovieIds() / 20;;
 let currentPage = 1;
+export let totalPages = 1;
 
-//SZUKANIE TOTAL PAGES
-function fetchMoviesID() {
-  return fetch(`${BASE_URL}${MOVIE_POPULAR_PATH}?api_key=${API_KEY}`)
-    .then(response => response.json())
-    .then(data => data.results)
-    .catch(error => {
-      console.error('Wystąpił błąd podczas pobierania filmów:', error);
-      return [];
-    });
+// Funkcja wywołująca totalPages
+async function fetchTotalResults() {
+  try {
+    const res = await fetch(`${BASE_URL}${MOVIE_POPULAR_PATH}?api_key=${API_KEY}`);
+    const json = await res.json();
+    console.log(json);
+    let totalResults;
+    if (currentTotalResults >= 1) {
+      totalResults = currentTotalResults;
+    } else {
+      totalResults = json.total_results;
+      console.log(totalResults);
+    }
+    let results = json.results;
+    console.log(results.length);
+    if (totalResults > 10000) {
+      totalResults = 10000;
+    }
+    let totalPages = Math.ceil(totalResults / results.length);
+    console.log('Liczba stron:', totalPages);
+    return { currentPage: 1, totalPages };
+  } catch (error) {
+    console.error('Wystąpił błąd podczas pobierania filmów:', error);
+    return { currentPage: 1, totalPages: 500 };
+  }
 }
 
-function sumMovieIds() {
-  fetchMoviesID()
-    .then(results => {
-      const movieIds = results.map(movie => movie.id);
-      const sum = movieIds.reduce((total, id) => total + id, 0);
-      console.log('Suma ID filmów:', sum);
-    })
-    .catch(error => {
-      console.error('Wystąpił błąd:', error);
-    });
+async function runAsync() {
+  const { currentPage: updatedCurrentPage, totalPages: updatedTotalPages } =
+    await fetchTotalResults();
+  currentPage = updatedCurrentPage;
+  totalPages = updatedTotalPages;
+  console.log('Aktualna wartość currentPage:', currentPage);
+  console.log('Aktualna wartość totalPages:', totalPages);
 }
-
-sumMovieIds();
-
 
 //SZUKANIE ELEMENTÓW
 const prevButton = document.querySelector('.arrow__left');
@@ -57,12 +67,17 @@ function updatePagination() {
   currentPageElement.textContent = currentPage;
   nextPage1.textContent = currentPage + 1;
   nextPage2.textContent = currentPage + 2;
-  window.scrollTo(0, 0);
+  lastPage.textContent = totalPages;
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
   console.log('update paginacji');
 }
 
 //Funkcja do odświeżania DOM wewnątrz event listenera
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await runAsync();
   loadMovies(currentPage);
   updatePagination();
 });
@@ -91,7 +106,6 @@ function normalizeBeforeAfterPages() {
     showElement(dotsPageLast);
     showElement(lastPage);
     loadMovies(currentPage);
-
     updatePagination();
   }
   if (currentPage === 2) {
@@ -298,3 +312,5 @@ document.addEventListener('keydown', event => {
     changePage(currentPage + 1);
   }
 });
+
+export { fetchTotalResults, updatePagination, runAsync };
