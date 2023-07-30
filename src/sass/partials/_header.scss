@@ -24,16 +24,20 @@
   &__container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 40px;
+
+    @include mq(tablet) {
+      align-items: center;
+    }
   }
 
   &__heading {
     font-weight: 500;
     font-size: 30px;
+    display: none;
 
-    @include mq(mobile, max) {
-      display: none;
+    @include mq(tablet) {
+      display: block;
     }
   }
 }
