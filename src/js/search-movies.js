@@ -1,5 +1,5 @@
 import { renderMoviesCards, loadMovies } from './fetch-data';
-import { updatePagination, fetchTotalResults, totalPages, runAsync } from './pagination';
+import { updatePagination, fetchTotalResults, runAsync } from './pagination'; // totalPages, 
 import debounce from 'lodash.debounce';
 
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
