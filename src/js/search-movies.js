@@ -1,8 +1,7 @@
-// <<<<<<< origin/pagination2
-// import { renderMoviesCards } from './fetch-data';
+import { renderMoviesCards, loadMovies } from './fetch-data';
 import { updatePagination, fetchTotalResults, totalPages, runAsync } from './pagination';
 import debounce from 'lodash.debounce';
-import { renderMoviesCards, loadMovies } from './fetch-data';
+
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 
 const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
