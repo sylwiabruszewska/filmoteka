@@ -1,5 +1,6 @@
-import { renderMoviesCards, loadMovies } from './fetch-data';
-import { updatePagination, fetchTotalResults, runAsync } from './pagination'; // totalPages, 
+import { addModalListenerFunction, getGenresNames } from './fetch-data';
+import noMoviePoster from '../images/no-poster-available.jpg';
+import { updatePagination, fetchTotalResults, runAsync } from './pagination'; // totalPages,
 import debounce from 'lodash.debounce';
 
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
@@ -43,8 +44,7 @@ export async function searchMovies(e) {
   }
   clearInterfaceUI();
 
-  renderMoviesCards(data.results);
-  galleryOfMovies.innerHTML = data.query = '';
+  renderMoviesCardsfromInput(data.results);
   Loading.remove();
   if (data.results == 0) {
     errorMsg.style.display = 'flex';
@@ -59,4 +59,28 @@ function clearInterfaceUI() {
   Loading.arrows({
     svgColor: '#ff6b08',
   });
+}
+
+async function renderMoviesCardsfromInput(movies) {
+  const markup = movies
+    .map(({ poster_path, title, name, genre_ids, id, release_date, first_air_date }) => {
+      const movieGenres = getGenresNames(genre_ids);
+      const releaseDate = (release_date || first_air_date || '').slice(0, 4);
+      const movieTitle = title ? title : name;
+      const moviePoster =
+        poster_path != null ? `https://image.tmdb.org/t/p/w500${poster_path}` : noMoviePoster;
+      return `
+          <li class="movie-card" data-id="${id}" data-type="movie" data-modal-open>
+            <div class="movie-card__box">
+              <img class="movie-card__img" src="${moviePoster}" data-img="${moviePoster}" loading="lazy" alt="${movieTitle}" />
+            </div>
+            <h2 class="movie-card__heading">${movieTitle}</h2>
+            <span class="movie-card__caption">${movieGenres} | ${releaseDate}</span>
+          </li>
+          `;
+    })
+    .join('');
+
+  galleryOfMovies.innerHTML = markup;
+  addModalListenerFunction(); // nasłuchiwanie na kliknięcia po załadowaniu elementów
 }
