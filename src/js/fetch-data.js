@@ -116,10 +116,14 @@ async function addClickListenerToCards(cards) {
       const movieId = card.dataset.id;
       const mediaType = card.dataset.type;
       const movieData = await fetchMovieById(movieId, mediaType);
+      const moviePoster =
+        movieData.poster_path != null
+          ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
+          : noMoviePoster;
 
       // renderowanie danych
       modalTitle.textContent = movieData.title || movieData.name;
-      modalPoster.src = `https://image.tmdb.org/t/p/w500${movieData.poster_path}`;
+      modalPoster.src = `${moviePoster}`;
       modalVote.textContent = movieData.vote_average;
       modalVoteCount.textContent = movieData.vote_count;
       modalPopularity.textContent = movieData.popularity;
