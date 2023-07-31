@@ -60,7 +60,7 @@ async function loadMovies(page) {
     // Opóźnij renderowanie o 1sek - później skasować setTimeout
     setTimeout(async () => {
       const movies = await fetchMovies(page);
-      renderMoviesCards(movies);
+      renderMoviesCards(movies.results);
       Notiflix.Block.remove('.is-loading');
     }, 1000);
   } catch (error) {
