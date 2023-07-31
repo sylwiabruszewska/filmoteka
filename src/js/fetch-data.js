@@ -1,32 +1,23 @@
 import Notiflix from 'notiflix';
 import noMoviePoster from '../images/no-poster-available.jpg';
+import genresData from './genres.json';
 
 const galleryOfMovies = document.querySelector('.movie-gallery');
 const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const MAIN_PAGE_PATH = '/trending/all/day';
-const GENRE_LIST_PATH = `/genre/movie/list`;
 
 async function fetchMovies(page) {
   const response = await fetch(`${BASE_URL}${MAIN_PAGE_PATH}?api_key=${API_KEY}&page=${page}`);
-  const fetchMovies = await response.json();
-  return fetchMovies.results;
+  const data = await response.json();
+  return data;
 }
 
 async function renderMoviesCards(movies) {
-  const genres = await fetchGenres();
   const markup = movies
-
     .map(
       ({ poster_path, title, name, genre_ids, id, media_type, release_date, first_air_date }) => {
-        const movieGenres = genre_ids
-          .map(genreId => {
-            const genre = genres.find(genre => genre.id === genreId);
-            return genre ? genre.name : null;
-          })
-          .filter(genreName => genreName)
-          .join(', ');
-
+        const movieGenres = getGenresNames(genre_ids);
         const releaseDate = (release_date || first_air_date || '').slice(0, 4);
         const movieTitle = title ? title : name;
         const moviePoster =
@@ -48,11 +39,16 @@ async function renderMoviesCards(movies) {
   addModalListenerFunction(); // nasłuchiwanie na kliknięcia po załadowaniu elementów
 }
 
-async function fetchGenres() {
-  const response = await fetch(`${BASE_URL}/${GENRE_LIST_PATH}?api_key=${API_KEY}`);
-  const data = await response.json();
-  return data.genres;
-}
+const getGenresNames = genre_ids => {
+  const genres = genresData.genres;
+  return genre_ids
+    .map(genreId => {
+      const genre = genres.find(genre => genre.id === genreId);
+      return genre ? genre.name : null;
+    })
+    .filter(genreName => genreName)
+    .join(', ');
+};
 
 async function loadMovies(page) {
   try {
@@ -170,7 +166,7 @@ async function addClickListenerToCards(cards) {
 export {
   fetchMovies,
   renderMoviesCards,
-  fetchGenres,
+  getGenresNames,
   loadMovies,
   fetchMovieById,
   addModalListenerFunction,
