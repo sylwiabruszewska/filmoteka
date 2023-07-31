@@ -86,10 +86,14 @@ async function fetchMovieById(movieId, type) {
 
 function addModalListenerFunction() {
   const movieCards = document.querySelectorAll('.movie-card');
-  addClickListenerToCards(movieCards);
+  movieCards.forEach(movieCard => {
+    movieCard.addEventListener('click', () => {
+      addClickListenerToCards(movieCard.dataset.id, movieCard.dataset.type);
+    });
+  });
 }
 
-async function addClickListenerToCards(cards) {
+async function addClickListenerToCards(movieId, mediaType) {
   const backdrop = document.querySelector('.backdrop-movie');
   const modalCloseButton = document.querySelector('[data-modal-close]');
   const modalTitle = document.querySelector('.modal-movie__title');
@@ -101,66 +105,62 @@ async function addClickListenerToCards(cards) {
   const modalGenre = document.querySelector('.modal-movie__genre');
   const modalDescription = document.querySelector('.modal-movie__text');
 
-  cards.forEach(card => {
-    card.addEventListener('click', async () => {
-      Notiflix.Block.arrows('.modal-movie', {
-        svgSize: '80px',
-        svgColor: '#ff6b08',
-        backgroundColor: '#ffffff',
-      });
-
-      const movieId = card.dataset.id;
-      const mediaType = card.dataset.type;
-      const movieData = await fetchMovieById(movieId, mediaType);
-      const moviePoster =
-        movieData.poster_path != null
-          ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
-          : noMoviePoster;
-
-      // renderowanie danych
-      modalTitle.textContent = movieData.title || movieData.name;
-      modalPoster.src = `${moviePoster}`;
-      modalVote.textContent = movieData.vote_average;
-      modalVoteCount.textContent = movieData.vote_count;
-      modalPopularity.textContent = movieData.popularity;
-      modalOriginalTitle.textContent = movieData.original_title || movieData.original_name;
-      const genreNames = movieData.genres.map(genre => genre.name).join(', ');
-      modalGenre.textContent = genreNames;
-      modalDescription.textContent = movieData.overview;
-      Notiflix.Block.remove('.modal-movie');
-
-      // otwórz modal
-      backdrop.classList.remove('modal-movie-is-hidden');
-
-      // zamknij modal po kliknięciu na btn close
-      modalCloseButton.addEventListener('click', () => {
-        backdrop.classList.add('modal-movie-is-hidden');
-      });
-
-      //MIKI dodaje kod do zamykania na ESC i clik poza modal
-
-      const closeMovieModal = () => {
-        backdrop.classList.add('modal-movie-is-hidden');
-      };
-
-      const closeMovieModalOnEsc = e => {
-        if (e.key === 'Escape') {
-          closeMovieModal();
-        }
-        window.removeEventListener('keydown', closeMovieModalOnEsc);
-      };
-      window.addEventListener('keydown', closeMovieModalOnEsc);
-
-      backdrop.addEventListener('mousedown', onOutsideMovieModalClick);
-      backdrop.addEventListener('click', onOutsideMovieModalClick);
-      function onOutsideMovieModalClick(e) {
-        if (e.target === backdrop) {
-          closeMovieModal();
-        }
-        backdrop.removeEventListener('click', onOutsideMovieModalClick);
-      }
-    });
+  Notiflix.Block.arrows('.modal-movie', {
+    svgSize: '80px',
+    svgColor: '#ff6b08',
+    backgroundColor: '#ffffff',
   });
+
+  // const movieId = card.dataset.id;
+  // const mediaType = card.dataset.type;
+  const movieData = await fetchMovieById(movieId, mediaType);
+  const moviePoster =
+    movieData.poster_path != null
+      ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
+      : noMoviePoster;
+
+  // renderowanie danych
+  modalTitle.textContent = movieData.title || movieData.name;
+  modalPoster.src = `${moviePoster}`;
+  modalVote.textContent = movieData.vote_average;
+  modalVoteCount.textContent = movieData.vote_count;
+  modalPopularity.textContent = movieData.popularity;
+  modalOriginalTitle.textContent = movieData.original_title || movieData.original_name;
+  const genreNames = movieData.genres.map(genre => genre.name).join(', ');
+  modalGenre.textContent = genreNames;
+  modalDescription.textContent = movieData.overview;
+  Notiflix.Block.remove('.modal-movie');
+
+  // otwórz modal
+  backdrop.classList.remove('modal-movie-is-hidden');
+
+  // zamknij modal po kliknięciu na btn close
+  modalCloseButton.addEventListener('click', () => {
+    backdrop.classList.add('modal-movie-is-hidden');
+  });
+
+  //MIKI dodaje kod do zamykania na ESC i clik poza modal
+
+  const closeMovieModal = () => {
+    backdrop.classList.add('modal-movie-is-hidden');
+  };
+
+  const closeMovieModalOnEsc = e => {
+    if (e.key === 'Escape') {
+      closeMovieModal();
+    }
+    window.removeEventListener('keydown', closeMovieModalOnEsc);
+  };
+  window.addEventListener('keydown', closeMovieModalOnEsc);
+
+  backdrop.addEventListener('mousedown', onOutsideMovieModalClick);
+  backdrop.addEventListener('click', onOutsideMovieModalClick);
+  function onOutsideMovieModalClick(e) {
+    if (e.target === backdrop) {
+      closeMovieModal();
+    }
+    backdrop.removeEventListener('click', onOutsideMovieModalClick);
+  }
 }
 
 export {
