@@ -10,7 +10,7 @@ import {
 const galleryOfMovies = document.querySelector('.movie-gallery');
 const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
 const BASE_URL = 'https://api.themoviedb.org/3';
-const MAIN_PAGE_PATH = '/trending/all/day';
+const MAIN_PAGE_PATH = '/trending/movie/day';
 
 async function fetchMovies(page) {
   const response = await fetch(`${BASE_URL}${MAIN_PAGE_PATH}?api_key=${API_KEY}&page=${page}`);
@@ -20,15 +20,14 @@ async function fetchMovies(page) {
 
 async function renderMoviesCards(movies) {
   const markup = movies
-    .map(
-      ({ poster_path, title, name, genre_ids, id, media_type, release_date, first_air_date }) => {
-        const movieGenres = getGenresNames(genre_ids);
-        const releaseDate = (release_date || first_air_date || '').slice(0, 4);
-        const movieTitle = title ? title : name;
-        const moviePoster =
-          poster_path != null ? `https://image.tmdb.org/t/p/w500${poster_path}` : noMoviePoster;
-        return `
-          <li class="movie-card" data-id="${id}" data-type="${media_type}" data-modal-open>
+    .map(({ poster_path, title, name, genre_ids, id, release_date, first_air_date }) => {
+      const movieGenres = getGenresNames(genre_ids);
+      const releaseDate = (release_date || first_air_date || '').slice(0, 4);
+      const movieTitle = title ? title : name;
+      const moviePoster =
+        poster_path != null ? `https://image.tmdb.org/t/p/w500${poster_path}` : noMoviePoster;
+      return `
+          <li class="movie-card" data-id="${id}" data-type="movie" data-modal-open>
             <div class="movie-card__box">
               <img class="movie-card__img" src="${moviePoster}" data-img="${moviePoster}" loading="lazy" alt="${movieTitle}" />
             </div>
@@ -36,8 +35,7 @@ async function renderMoviesCards(movies) {
             <span class="movie-card__caption">${movieGenres} | ${releaseDate}</span>
           </li>
           `;
-      },
-    )
+    })
     .join('');
 
   galleryOfMovies.innerHTML = markup;
@@ -78,9 +76,9 @@ async function loadMovies(page) {
 // FETCH MOVIE BY ID
 ///////////////////////////////////
 
-async function fetchMovieById(movieId, type) {
+async function fetchMovieById(movieId) {
   try {
-    const response = await fetch(`${BASE_URL}/${type}/${movieId}?api_key=${API_KEY}`);
+    const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`);
     const responseObject = await response.json();
     return responseObject;
   } catch (error) {
@@ -93,12 +91,12 @@ function addModalListenerFunction() {
   const movieCards = document.querySelectorAll('.movie-card');
   movieCards.forEach(movieCard => {
     movieCard.addEventListener('click', () => {
-      addClickListenerToCards(movieCard.dataset.id, movieCard.dataset.type);
+      addClickListenerToCards(movieCard.dataset.id);
     });
   });
 }
 
-async function addClickListenerToCards(movieId, mediaType) {
+async function addClickListenerToCards(movieId) {
   const backdrop = document.querySelector('.backdrop-movie');
   const modalCloseButton = document.querySelector('[data-modal-close]');
   const modalTitle = document.querySelector('.modal-movie__title');
@@ -118,7 +116,7 @@ async function addClickListenerToCards(movieId, mediaType) {
 
   // const movieId = card.dataset.id;
   // const mediaType = card.dataset.type;
-  const movieData = await fetchMovieById(movieId, mediaType);
+  const movieData = await fetchMovieById(movieId);
   const moviePoster =
     movieData.poster_path != null
       ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
