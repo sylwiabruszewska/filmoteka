@@ -1,6 +1,11 @@
 import Notiflix from 'notiflix';
 import noMoviePoster from '../images/no-poster-available.jpg';
 import genresData from './genres.json';
+import {
+  addToLocalStorage,
+  removeFromLocalStorage,
+  checkMovieInLocalStorage,
+} from './local-storage';
 
 const galleryOfMovies = document.querySelector('.movie-gallery');
 const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
@@ -161,6 +166,57 @@ async function addClickListenerToCards(movieId, mediaType) {
     }
     backdrop.removeEventListener('click', onOutsideMovieModalClick);
   }
+
+  //////////////////// LOCAL STORAGE //////////////////////
+
+  const watchedButton = document.createElement('button');
+  watchedButton.className = 'modal-movie__btn-watched';
+  watchedButton.textContent = 'Add to watched';
+
+  const queueButton = document.createElement('button');
+  queueButton.className = 'modal-movie__btn-queue';
+  queueButton.textContent = 'Add to queue';
+
+  const modalMovieBox = document.querySelector('.modal-movie__box');
+
+  while (modalMovieBox.firstChild) {
+    modalMovieBox.removeChild(modalMovieBox.firstChild);
+  }
+
+  modalMovieBox.appendChild(watchedButton);
+  modalMovieBox.appendChild(queueButton);
+
+  let isMovieInWatched;
+  let isMovieInQueue;
+
+  // Sprawdzenie, czy dany film znajduje się w localStorage
+  isMovieInWatched = checkMovieInLocalStorage(movieData.id, 'watched');
+  isMovieInQueue = checkMovieInLocalStorage(movieData.id, 'queue');
+
+  watchedButton.textContent = isMovieInWatched ? 'ON THE WATCHED ✓' : 'Add to watched';
+  queueButton.textContent = isMovieInQueue ? 'ON THE QUEUE ✓' : 'Add to queue';
+
+  watchedButton.addEventListener('click', function () {
+    if (isMovieInWatched) {
+      removeFromLocalStorage(movieData.id, 'watched');
+    } else {
+      addToLocalStorage(movieData.id, 'watched');
+    }
+
+    isMovieInWatched = !isMovieInWatched;
+    watchedButton.textContent = isMovieInWatched ? 'ADDED ✓' : 'Add to watched';
+  });
+
+  queueButton.addEventListener('click', function () {
+    if (isMovieInQueue) {
+      removeFromLocalStorage(movieData.id, 'queue');
+    } else {
+      addToLocalStorage(movieData.id, 'queue');
+    }
+
+    isMovieInQueue = !isMovieInQueue;
+    queueButton.textContent = isMovieInQueue ? 'ADDED ✓' : 'Add to queue';
+  });
 }
 
 export {
