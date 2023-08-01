@@ -3,6 +3,40 @@ import noMoviePoster from '../images/no-poster-available.jpg';
 
 const libraryGallery = document.querySelector('.library-gallery');
 
+const btnWatched = document.querySelector('.btn-watched');
+const btnQueue = document.querySelector('.btn-queue');
+
+btnWatched.addEventListener('click', () => {
+  const watchedMoviesArray = JSON.parse(localStorage.getItem('watched'));
+  if (watchedMoviesArray) {
+    loadMovies(watchedMoviesArray);
+  } else {
+    console.log('brak zapisanych filmów na tablicy Watched Movies');
+  }
+});
+
+btnQueue.addEventListener('click', () => {
+  const queueMoviesArray = JSON.parse(localStorage.getItem('queue'));
+  if (queueMoviesArray) {
+    loadMovies(queueMoviesArray);
+  } else {
+    console.log('brak zapisanych filmów na tablicy Queue');
+  }
+});
+
+async function loadMovies(movieIds) {
+  try {
+    const results = [];
+    for (const movieId of movieIds) {
+      const movieData = await fetchMovieById(movieId);
+      results.push(movieData);
+    }
+    renderLibraryCards(results);
+  } catch (error) {
+    console.log('Błąd podczas pobierania danych filmów:', error);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   const watchedMoviesArray = JSON.parse(localStorage.getItem('watched'));
 
