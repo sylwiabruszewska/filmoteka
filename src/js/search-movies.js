@@ -7,6 +7,7 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 const SEARCH_MOVIE_PATH = `/search/movie`;
 const galleryOfMovies = document.querySelector('.movie-gallery');
 const errorMsg = document.querySelector('.error-message');
+const pagination = document.querySelector('.pagination');
 
 async function fetchMoviesByTitle(page, movieTitle) {
   const response = await fetch(
@@ -25,10 +26,12 @@ async function loadMoviesFromInput(page, title) {
     });
     const data = await fetchMoviesByTitle(page, title);
     if (data.total_results === 0) {
+      pagination.style.display = 'none';
       errorMsg.textContent = 'Search result not successful. Enter the correct movie name';
       errorMsg.style.display = 'flex';
       clearInterfaceUI();
     } else {
+      pagination.style.display = 'flex';
       errorMsg.style.display = 'none';
       clearInterfaceUI();
       renderMoviesCardsFromInput(data.results);
