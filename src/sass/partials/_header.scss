@@ -77,8 +77,15 @@
 .nav {
   display: flex;
   align-items: baseline;
-  gap: 40px;
+  // gap: 40px;
+  //po dodaniu zakładki my account, trzeba zmniejszyć odległość dla 'mobile' pomiędzy zakładkami
+  gap: 25px;
   list-style-type: none;
+
+    @include mq(tablet) {
+    gap: 40px;
+    }
+   
 
   &__item {
     display: block;

@@ -125,6 +125,7 @@ async function addClickListenerToCards(movieId) {
   // renderowanie danych
   modalTitle.textContent = movieData.title || movieData.name;
   modalPoster.src = `${moviePoster}`;
+
   modalVote.textContent = movieData.vote_average.toFixed(1);
   modalVoteCount.textContent = movieData.vote_count;
   modalPopularity.textContent = movieData.popularity;

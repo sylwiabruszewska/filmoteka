@@ -1,4 +1,82 @@
+// logout button
+.nav__content {
+  position: relative;
+}
+
+.nav__button--logout {
+  position: absolute;
+  bottom: -25px;
+  left: 43px;
+  @include text(500, 12px, 1.3, $blackColor);
+  border: 1px solid $whiteColor;
+  outline: none;
+  cursor: pointer;
+  color: $whiteColor;
+  background: transparent;
+  border-radius: 5px;
+  overflow: hidden;
+  text-transform: uppercase;
+  min-height: 20px;
+  padding: 0 5px;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 250ms;
+  &:hover {
+    background-color: $modalButtonCollor;
+    color: $whiteColor;
+    border: none;
+  }
+
+  @include mq(tablet) {
+    width: 125px;
+    bottom: -25px;
+    left: 30px;
+    // right: 50%;
+  }
+  @include mq(desktop) {
+    width: 136px;
+  }
+}
+
+// user-modal button
+
+.user-logout__btn,
+.login-form__button-submit,
+.signup-form__btutton-submit {
+  @include text(500, 12px, 1.3, $blackColor);
+  border: 1px solid $whiteColor;
+  outline: none;
+  cursor: pointer;
+  color: $whiteColor;
+  background: transparent;
+  border-radius: 5px;
+  overflow: hidden;
+  text-transform: uppercase;
+  min-height: 44px;
+  padding: 0 5px;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 250ms;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 110px;
+
+  &:hover {
+    background-color: $modalButtonCollor;
+    color: $whiteColor;
+    border: none;
+  }
+
+  @include mq(tablet) {
+    width: 125px;
+  }
+  @include mq(desktop) {
+    width: 136px;
+  }
+}
+
+// modal firebase
+
 .firebase__modal {
+  z-index: 0;
   display: none;
   position: fixed;
   top: 0;
@@ -11,13 +89,15 @@
   // overflow: auto;
 }
 
-.login-form__modal, .signup-form__modal, .user__modal {
+.login-form__modal,
+.signup-form__modal,
+.user__modal {
   padding: 20px 15px;
   text-align: center;
   width: 350px;
-  height: 600px;
+  // height: 80vh;
   background-color: $modalTextColor;
-  margin: 20vh auto;
+  margin: 20 auto;
   opacity: 1;
   z-index: 10;
   //     width: 250px;
@@ -28,6 +108,13 @@
   // align-items: center;
   position: relative;
   border-radius: 15px;
+  box-shadow: -1px 1px 33px 8px $whiteColor;
+    @include mq(tablet) {
+    margin: 100px auto;
+  } 
+  @include mq(desktop) {
+    margin: 150px auto;
+  }
 }
 
 // // .login-form {
@@ -37,6 +124,7 @@
 .login-form__title {
   margin-top: 20px;
   margin-bottom: 20px;
+
 }
 .login-form__btn-close {
   font-size: 30px;
@@ -53,53 +141,45 @@
   right: 16px;
 }
 
-// .login-form__input {
-//   width: 100%;
-//   color: $whiteColor;
-//   flex-grow: 1;
-//   outline: transparent;
-//   border: none;
-//   background-color: transparent;
-//   border: none;
-//   padding-left: 0;
-//   padding-right: 0;
-//   padding-bottom: 4px;
-//   &::placeholder {
-//     color: #ffffff;
-//   }
-// }
-
-.login-form__button-submit, .login-form__button-submit, .user-logout__btn {
+.login-form__input {
+  width: 100%;
   color: $whiteColor;
-  background: transparent;
-  width: 130px;
-  height: 44px;
-  font-size: 12px;
+  flex-grow: 1;
+  outline: transparent;
+  border: none;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid $whiteColor;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 4px;
+  margin-bottom: 10px;
+
+  &::placeholder {
+    color: #ffffff;
+  }
+}
+
+.login__anchor, #signup__anchor {
+// margin-left: 10px;
+   cursor: pointer;
+    background: none;
+    padding: 0;
+    margin: 0;
+    border: none;
+    margin-left: 3px;
+    display: block;
+    color: $footerTextColor;
+    text-decoration: underline;
+    margin-top: 10px;
+    margin-bottom: 10px;
+     font-size: 16px;
+  
   font-weight: 500;
-  line-height: 1.33;
-  letter-spacing: 0em;
-  text-align: center;
-  border-radius: 5px;
-  border: 1px solid $whiteColor;
-  padding-top: 14px;
-  padding-bottom: 12px;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
+  line-height: 1.30;
 
-  @include mq(tablet) {
-    width: 152px;
-    padding-top: 13px;
-    padding-bottom: 13px;
-  }
-  @include mq(desktop) {
-    width: 147px;
-    height: 42px;
-  }
-
-  &:hover {
-    color: $secondColor;
-    border: 1px solid $secondColor;
-    background-color: $whiteColor;
-    cursor: pointer;
-  }
+    &:hover,
+    &:focus {
+      color: $primaryColor;
+    }
 }

@@ -2,6 +2,7 @@ import { addModalListenerFunction, fetchMovieById } from './fetch-data';
 import noMoviePoster from '../images/no-poster-available.jpg';
 import genresData from './genres.json';
 
+
 const libraryGallery = document.querySelector('.library-gallery');
 
 const btnWatched = document.querySelector('.btn-watched');
@@ -58,6 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 
+
 function renderLibraryCards(movies) {
   const markup = movies
     .map(
@@ -68,11 +70,13 @@ function renderLibraryCards(movies) {
         const moviePoster =
           poster_path != null ? `https://image.tmdb.org/t/p/w500${poster_path}` : noMoviePoster;
         return `
+
           <li class="movie-card" data-id="${id}" data-type="movie">
             <div class="movie-card__box">
               <img class="movie-card__img" src="${moviePoster}" data-img="${moviePoster}" loading="lazy" alt="${movieTitle}" />
             </div>
             <h2 class="movie-card__heading">${movieTitle}</h2>
+
             <span class="movie-card__caption"> ${genreName} | ${releaseDate} <span class="library-vote"> ${vote} </span></span>
             </li>
           `;
@@ -82,4 +86,5 @@ function renderLibraryCards(movies) {
 
   libraryGallery.innerHTML = markup;
   addModalListenerFunction();
+
 }

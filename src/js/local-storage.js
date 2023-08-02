@@ -1,5 +1,6 @@
 // Funkcja dodająca film do localStorage
 function addToLocalStorage(movieId, listType) {
+
     const moviesList = JSON.parse(localStorage.getItem(listType)) || [];
     if (!moviesList.includes(movieId)) {
       moviesList.push(movieId);
@@ -21,3 +22,4 @@ function addToLocalStorage(movieId, listType) {
   
   export { addToLocalStorage, removeFromLocalStorage, checkMovieInLocalStorage };
   
+
