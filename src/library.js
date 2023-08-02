@@ -8,3 +8,4 @@ import './js/fetch-data';
 import './js/library-load';
 // import './js/firebase/firebase-summary';
 import './js/firebase/firebase-summary';
+import './js/library-load';

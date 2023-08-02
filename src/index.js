@@ -5,6 +5,4 @@ import './js/pagination';
 // import './js/search-movies';
 import './js/fetch-data';
 import './js/local-storage';
-// import './js/watch-add';
-// import './js/queue-add';
-// import './js/buttons';
+
