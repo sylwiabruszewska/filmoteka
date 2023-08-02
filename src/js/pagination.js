@@ -5,8 +5,6 @@ const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const MOVIE_POPULAR_PATH = '/movie/popular';
 
-console.log('paginacja');
-
 let currentPage = 1;
 export let totalPages = 1;
 
@@ -15,21 +13,17 @@ async function fetchTotalResults() {
   try {
     const res = await fetch(`${BASE_URL}${MOVIE_POPULAR_PATH}?api_key=${API_KEY}`);
     const json = await res.json();
-    console.log(json);
     let totalResults;
     if (currentTotalResults >= 1) {
       totalResults = currentTotalResults;
     } else {
       totalResults = json.total_results;
-      console.log(totalResults);
     }
     let results = json.results;
-    console.log(results.length);
     if (totalResults > 10000) {
       totalResults = 10000;
     }
     let totalPages = Math.ceil(totalResults / results.length);
-    console.log('Liczba stron:', totalPages);
     return { currentPage: 1, totalPages };
   } catch (error) {
     console.error('Wystąpił błąd podczas pobierania filmów:', error);
@@ -42,8 +36,6 @@ async function runAsync() {
     await fetchTotalResults();
   currentPage = updatedCurrentPage;
   totalPages = updatedTotalPages;
-  console.log('Aktualna wartość currentPage:', currentPage);
-  console.log('Aktualna wartość totalPages:', totalPages);
 }
 
 //SZUKANIE ELEMENTÓW
@@ -72,7 +64,6 @@ function updatePagination() {
     top: 0,
     behavior: 'smooth',
   });
-  console.log('update paginacji');
 }
 
 //Funkcja do odświeżania DOM wewnątrz event listenera
@@ -133,7 +124,6 @@ function normalizeBeforeAfterPages() {
     showElement(dotsPageLast);
     showElement(lastPage);
     loadMovies(currentPage);
-    console.log('strona 3 NORM');
     updatePagination();
   }
   if (currentPage === 4) {
@@ -147,7 +137,6 @@ function normalizeBeforeAfterPages() {
     showElement(dotsPageLast);
     showElement(lastPage);
     loadMovies(currentPage);
-    console.log('strona 4 NORM');
     updatePagination();
   }
   if (currentPage <= totalPages - 5 && currentPage > 4) {
@@ -161,7 +150,6 @@ function normalizeBeforeAfterPages() {
     showElement(dotsPageLast);
     showElement(lastPage);
     loadMovies(currentPage);
-    console.log('strona od 5 do 495 NORM');
     updatePagination();
   }
 
@@ -176,7 +164,6 @@ function normalizeBeforeAfterPages() {
     showElement(dotsPageLast);
     showElement(lastPage);
     loadMovies(currentPage);
-    console.log('strona 496 NORM');
     updatePagination();
   }
   if (currentPage === totalPages - 3 && currentPage > 8) {
@@ -191,7 +178,6 @@ function normalizeBeforeAfterPages() {
     showElement(lastPage);
     updatePagination();
     loadMovies(currentPage);
-    console.log('strona 497 NORM');
   }
   if (currentPage === totalPages - 2 && currentPage > 8) {
     currentPage = currentPage;
@@ -205,7 +191,6 @@ function normalizeBeforeAfterPages() {
     hideElement(lastPage);
     updatePagination();
     loadMovies(currentPage);
-    console.log('strona 498 NORM');
   }
   if (currentPage === totalPages - 1 && currentPage > 8) {
     currentPage = currentPage;
@@ -219,7 +204,6 @@ function normalizeBeforeAfterPages() {
     hideElement(lastPage);
     updatePagination();
     loadMovies(currentPage);
-    console.log('strona 499 NORM');
   }
   if (currentPage === totalPages && currentPage > 8) {
     currentPage = currentPage;
@@ -233,7 +217,6 @@ function normalizeBeforeAfterPages() {
     hideElement(lastPage);
     updatePagination();
     loadMovies(currentPage);
-    console.log('strona 500 NORM');
   }
 }
 
