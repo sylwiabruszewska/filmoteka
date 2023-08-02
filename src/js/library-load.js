@@ -2,7 +2,6 @@ import { addModalListenerFunction, fetchMovieById } from './fetch-data';
 import noMoviePoster from '../images/no-poster-available.jpg';
 import genresData from './genres.json';
 
-
 const libraryGallery = document.querySelector('.library-gallery');
 
 const btnWatched = document.querySelector('.btn-watched');
@@ -12,8 +11,12 @@ btnWatched.addEventListener('click', () => {
   const watchedMoviesArray = JSON.parse(localStorage.getItem('watched'));
   if (watchedMoviesArray) {
     loadMovies(watchedMoviesArray);
+    btnWatched.classList.add('opened');
+    btnQueue.classList.remove('opened');
   } else {
     console.log('brak zapisanych filmów na tablicy Watched Movies');
+    btnWatched.classList.add('opened');
+    btnQueue.classList.remove('opened');
   }
 });
 
@@ -21,8 +24,12 @@ btnQueue.addEventListener('click', () => {
   const queueMoviesArray = JSON.parse(localStorage.getItem('queue'));
   if (queueMoviesArray) {
     loadMovies(queueMoviesArray);
+    btnQueue.classList.add('opened');
+    btnWatched.classList.remove('opened');
   } else {
     console.log('brak zapisanych filmów na tablicy Queue');
+    btnQueue.classList.add('opened');
+    btnWatched.classList.remove('opened');
   }
 });
 
@@ -58,18 +65,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-
-
 function renderLibraryCards(movies) {
   const markup = movies
-    .map(
-      ({ poster_path, title, name, genreName, id, release_date, first_air_date, vote_average }) => {
-        const movieTitle = title ? title : name;
-        const vote = vote_average.toFixed(1);
-        const releaseDate = (release_date || first_air_date || '').slice(0, 4);
-        const moviePoster =
-          poster_path != null ? `https://image.tmdb.org/t/p/w500${poster_path}` : noMoviePoster;
-        return `
+    .map(({ poster_path, title, name, id, release_date, first_air_date, vote_average }) => {
+      const movieTitle = title ? title : name;
+      const vote = vote_average.toFixed(1);
+      const releaseDate = (release_date || first_air_date || '').slice(0, 4);
+      const moviePoster =
+        poster_path != null ? `https://image.tmdb.org/t/p/w500${poster_path}` : noMoviePoster;
+      return `
 
           <li class="movie-card" data-id="${id}" data-type="movie">
             <div class="movie-card__box">
@@ -77,14 +81,12 @@ function renderLibraryCards(movies) {
             </div>
             <h2 class="movie-card__heading">${movieTitle}</h2>
 
-            <span class="movie-card__caption"> ${genreName} | ${releaseDate} <span class="library-vote"> ${vote} </span></span>
+            <span class="movie-card__caption">  ${releaseDate} <span class="library-vote"> ${vote} </span></span>
             </li>
           `;
-      },
-    )
+    })
     .join('');
 
   libraryGallery.innerHTML = markup;
   addModalListenerFunction();
-
 }
