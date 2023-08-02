@@ -55,20 +55,18 @@ const getGenresNames = genre_ids => {
 
 async function loadMovies(page) {
   try {
-    Notiflix.Block.arrows('.is-loading', {
+    Notiflix.Loading.arrows({
       svgSize: '80px',
       svgColor: '#ff6b08',
+      backgroundColor: 'rgba(255, 255, 255, 0.5)',
     });
 
-    // Opóźnij renderowanie o 1sek - później skasować setTimeout
-    setTimeout(async () => {
-      const movies = await fetchMovies(page);
-      renderMoviesCards(movies.results);
-      Notiflix.Block.remove('.is-loading');
-    }, 1000);
+    const movies = await fetchMovies(page);
+    renderMoviesCards(movies.results);
+    Notiflix.Loading.remove();
   } catch (error) {
     console.error(error);
-    Notiflix.Block.remove('.is-loading');
+    Notiflix.Loading.remove();
   }
 }
 
@@ -125,7 +123,6 @@ async function addClickListenerToCards(movieId) {
   // renderowanie danych
   modalTitle.textContent = movieData.title || movieData.name;
   modalPoster.src = `${moviePoster}`;
-
   modalVote.textContent = movieData.vote_average.toFixed(1);
   modalVoteCount.textContent = movieData.vote_count;
   modalPopularity.textContent = movieData.popularity;
