@@ -32,7 +32,6 @@ export async function searchMovies(e) {
   fetchTotalResults(); //paginacja
   currentTotalResults = data.total_results; //paginacja
   totalPages = Math.ceil(data.total_results / data.results.length); //paginacja
-  console.log(totalPages); //paginacja
   updatePagination(); //paginacja
   runAsync(); //paginacja
   if (input.value === '') {
