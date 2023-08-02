@@ -63,7 +63,8 @@ ul li.last {
   background: #ff6b08;
 }
 
-.pagination ul li.btn:hover .pagination ul li.numb:hover {
+.pagination ul li.btn:hover,
+.pagination ul li.numb:hover {
   @include mq(tablet) {
     color: #fff;
     background: #ff6b08;
