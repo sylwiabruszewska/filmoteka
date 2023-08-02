@@ -81,7 +81,7 @@ function checkAuthentication() {
       myAccount.addEventListener('click', e => (userModal.style.display = 'block'));
     } else {
       // User is signed out
-      alert('You are not logged in');
+      // alert('You are not logged in');
     }
   });
 }
