@@ -38,6 +38,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase();
 
+const firebaseBackround = document.querySelector('.firebase__modal');
 const navLogoutBtn = document.querySelector('.nav__button--logout');
 const userModal = document.querySelector('#user-modal');
 const myAccount = document.querySelector('#my-account');
@@ -47,12 +48,10 @@ const logOutBtnModaL = document.querySelector('#logout-btn__modal');
 logOutBtn.addEventListener('click', logOutUser);
 logOutBtnModaL.addEventListener('click', logOutUser);
 
-
 function logOutUser() {
   signOut(auth)
     .then(function () {
       alert('Logout Successfully');
-
       const userModal = document.querySelector('#user-modal');
       userModal.style.display = 'none';
       const navLogoutBtn = document.querySelector('.nav__button--logout');
@@ -78,7 +77,11 @@ function checkAuthentication() {
       navLogoutBtn.style.display = 'block';
       logOutBtn.addEventListener('click', logOutUser);
       myAccount.removeEventListener('click', openLoginModal);
-      myAccount.addEventListener('click', e => (userModal.style.display = 'block'));
+      myAccount.addEventListener('click', openLoggedinUserModal);
+      function openLoggedinUserModal() {
+        userModal.style.display = 'block';
+        firebaseBackround.style.display = 'block';
+      }
     } else {
       // User is signed out
       // alert('You are not logged in');
