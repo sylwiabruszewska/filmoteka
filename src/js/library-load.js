@@ -1,5 +1,7 @@
-import { fetchMovieById } from './fetch-data';
+import { addModalListenerFunction, fetchMovieById } from './fetch-data';
 import noMoviePoster from '../images/no-poster-available.jpg';
+import genresData from './genres.json';
+
 
 const libraryGallery = document.querySelector('.library-gallery');
 
@@ -56,22 +58,33 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
+
+
 function renderLibraryCards(movies) {
   const markup = movies
-    .map(({ poster_path, title, name, id }) => {
-      const movieTitle = title ? title : name;
-      const moviePoster =
-        poster_path != null ? `https://image.tmdb.org/t/p/w500${poster_path}` : noMoviePoster;
-      return `
+    .map(
+      ({ poster_path, title, name, genreName, id, release_date, first_air_date, vote_average }) => {
+        const movieTitle = title ? title : name;
+        const vote = vote_average.toFixed(1);
+        const releaseDate = (release_date || first_air_date || '').slice(0, 4);
+        const moviePoster =
+          poster_path != null ? `https://image.tmdb.org/t/p/w500${poster_path}` : noMoviePoster;
+        return `
+
           <li class="movie-card" data-id="${id}" data-type="movie">
             <div class="movie-card__box">
               <img class="movie-card__img" src="${moviePoster}" data-img="${moviePoster}" loading="lazy" alt="${movieTitle}" />
             </div>
             <h2 class="movie-card__heading">${movieTitle}</h2>
-          </li>
+
+            <span class="movie-card__caption"> ${genreName} | ${releaseDate} <span class="library-vote"> ${vote} </span></span>
+            </li>
           `;
-    })
+      },
+    )
     .join('');
 
   libraryGallery.innerHTML = markup;
+  addModalListenerFunction();
+
 }

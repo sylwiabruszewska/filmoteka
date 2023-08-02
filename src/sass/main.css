@@ -196,18 +196,21 @@ a {
   font-size: 14px;
 }
 
-.movie-gallery {
+.movie-gallery,
+.library-gallery {
   margin-bottom: 60px;
 }
 @media screen and (min-width: 768px) {
-  .movie-gallery {
+  .movie-gallery,
+  .library-gallery {
     display: flex;
     flex-wrap: wrap;
     gap: 32px;
   }
 }
 @media screen and (min-width: 1280px) {
-  .movie-gallery {
+  .movie-gallery,
+  .library-gallery {
     gap: 16px;
   }
 }
@@ -401,7 +404,8 @@ a {
 .modal-movie__item--label {
   color: #8c8c8c;
 }
-.modal-movie__list > li > span:first-child {
+.modal-movie__list > li > span:first-child
+ {
   color: #fff;
   background-color: #ff6b01;
   border-radius: 5px;
