@@ -100,6 +100,8 @@ async function addClickListenerToCards(cards) {
   const modalOriginalTitle = document.querySelector('.modal-movie__original-title');
   const modalGenre = document.querySelector('.modal-movie__genre');
   const modalDescription = document.querySelector('.modal-movie__text');
+  const modalAddToWatch = document.querySelector('.modal-movie__btn-watched');
+  const modalAddToQueue = document.querySelector('.modal-movie__btn-queue');
 
   cards.forEach(card => {
     card.addEventListener('click', async () => {
@@ -127,6 +129,8 @@ async function addClickListenerToCards(cards) {
       const genreNames = movieData.genres.map(genre => genre.name).join(', ');
       modalGenre.textContent = genreNames;
       modalDescription.textContent = movieData.overview;
+      modalAddToWatch.setAttribute('id', movieId);
+      modalAddToQueue.setAttribute('id', movieId);
       Notiflix.Block.remove('.modal-movie');
 
       // otwórz modal
