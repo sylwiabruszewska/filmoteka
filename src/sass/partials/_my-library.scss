@@ -1,4 +1,3 @@
 .library-gallery {
-  display: flex;
-  justify-content: center;
+  @extend .movie-gallery;
 }
