@@ -11,8 +11,12 @@ btnWatched.addEventListener('click', () => {
   const watchedMoviesArray = JSON.parse(localStorage.getItem('watched'));
   if (watchedMoviesArray) {
     loadMovies(watchedMoviesArray);
+    btnWatched.classList.add('opened');
+    btnQueue.classList.remove('opened');
   } else {
     console.log('brak zapisanych filmów na tablicy Watched Movies');
+    btnWatched.classList.add('opened');
+    btnQueue.classList.remove('opened');
   }
 });
 
@@ -20,8 +24,12 @@ btnQueue.addEventListener('click', () => {
   const queueMoviesArray = JSON.parse(localStorage.getItem('queue'));
   if (queueMoviesArray) {
     loadMovies(queueMoviesArray);
+    btnQueue.classList.add('opened');
+    btnWatched.classList.remove('opened');
   } else {
     console.log('brak zapisanych filmów na tablicy Queue');
+    btnQueue.classList.add('opened');
+    btnWatched.classList.remove('opened');
   }
 });
 
