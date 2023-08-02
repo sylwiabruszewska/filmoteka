@@ -1,50 +1,8 @@
 import { loadMovies } from './fetch-data.js';
-import { currentTotalResults } from './search-movies.js';
-
-const API_KEY = '50faffa66bb05e881b7f3de0b265b30c';
-const BASE_URL = 'https://api.themoviedb.org/3';
-const MOVIE_POPULAR_PATH = '/movie/popular';
-
-console.log('paginacja');
+import { loadMoviesFromInput } from './search-movies.js';
+import { totalPages, movieTitle } from './app.js';
 
 let currentPage = 1;
-export let totalPages = 1;
-
-// Funkcja wywołująca totalPages
-async function fetchTotalResults() {
-  try {
-    const res = await fetch(`${BASE_URL}${MOVIE_POPULAR_PATH}?api_key=${API_KEY}`);
-    const json = await res.json();
-    console.log(json);
-    let totalResults;
-    if (currentTotalResults >= 1) {
-      totalResults = currentTotalResults;
-    } else {
-      totalResults = json.total_results;
-      console.log(totalResults);
-    }
-    let results = json.results;
-    console.log(results.length);
-    if (totalResults > 10000) {
-      totalResults = 10000;
-    }
-    let totalPages = Math.ceil(totalResults / results.length);
-    console.log('Liczba stron:', totalPages);
-    return { currentPage: 1, totalPages };
-  } catch (error) {
-    console.error('Wystąpił błąd podczas pobierania filmów:', error);
-    return { currentPage: 1, totalPages: 500 };
-  }
-}
-
-async function runAsync() {
-  const { currentPage: updatedCurrentPage, totalPages: updatedTotalPages } =
-    await fetchTotalResults();
-  currentPage = updatedCurrentPage;
-  totalPages = updatedTotalPages;
-  console.log('Aktualna wartość currentPage:', currentPage);
-  console.log('Aktualna wartość totalPages:', totalPages);
-}
 
 //SZUKANIE ELEMENTÓW
 const prevButton = document.querySelector('.arrow__left');
@@ -59,8 +17,6 @@ const dotsPageLast = document.querySelector('.dots__last');
 const lastPage = document.querySelector('.last');
 const nextButton = document.querySelector('.arrow__right');
 
-const galleryOfMovies = document.querySelector('.movie-gallery');
-
 function updatePagination() {
   prevPage2.textContent = currentPage - 2;
   prevPage1.textContent = currentPage - 1;
@@ -72,15 +28,7 @@ function updatePagination() {
     top: 0,
     behavior: 'smooth',
   });
-  console.log('update paginacji');
 }
-
-//Funkcja do odświeżania DOM wewnątrz event listenera
-document.addEventListener('DOMContentLoaded', async () => {
-  await runAsync();
-  loadMovies(currentPage);
-  updatePagination();
-});
 
 //HIDDEN
 function hideElement(element) {
@@ -90,11 +38,68 @@ function showElement(element) {
   element.classList.remove('hidden');
 }
 
-//URUCHOMIENIE PIERWSZEJ STRONY
-normalizeBeforeAfterPages();
+// SYLWIA - PAGINACJANA SZYBKO DO WYSZUKIWARKI FILMÓW
+async function normalizeBeforeAfterPages(resetPages) {
+  if (resetPages === true) {
+    currentPage = 1;
+  }
 
-//LOGIKA
-function normalizeBeforeAfterPages() {
+  if (currentPage === 1 && totalPages === 1) {
+    hideElement(firstPage);
+    hideElement(dotsPage);
+    hideElement(prevPage1);
+    hideElement(prevPage2);
+    hideElement(nextPage1);
+    hideElement(nextPage2);
+    hideElement(dotsPageLast);
+    hideElement(lastPage);
+    if (movieTitle) {
+      await loadMoviesFromInput(currentPage, movieTitle);
+    } else {
+      await loadMovies(currentPage);
+    }
+    updatePagination();
+  }
+
+  if (totalPages === 2) {
+    if (currentPage === 1) {
+      hideElement(firstPage);
+      hideElement(dotsPage);
+      hideElement(prevPage1);
+      hideElement(prevPage2);
+      hideElement(nextPage1);
+      hideElement(nextPage2);
+      hideElement(dotsPageLast);
+      showElement(lastPage);
+      if (movieTitle) {
+        await loadMoviesFromInput(currentPage, movieTitle);
+      } else {
+        await loadMovies(currentPage);
+      }
+      updatePagination();
+    }
+
+    if (currentPage === 2) {
+      showElement(firstPage);
+      hideElement(dotsPage);
+      hideElement(prevPage1);
+      hideElement(prevPage2);
+      hideElement(nextPage1);
+      hideElement(nextPage2);
+      hideElement(dotsPageLast);
+      hideElement(lastPage);
+      if (movieTitle) {
+        await loadMoviesFromInput(currentPage, movieTitle);
+      } else {
+        await loadMovies(currentPage);
+      }
+      updatePagination();
+    }
+  }
+
+  /////////////////////
+  /////////////////////
+
   if (currentPage === 1) {
     currentPage = 1;
     hideElement(firstPage);
@@ -105,7 +110,11 @@ function normalizeBeforeAfterPages() {
     showElement(nextPage2);
     showElement(dotsPageLast);
     showElement(lastPage);
-    loadMovies(currentPage);
+    if (movieTitle) {
+      await loadMoviesFromInput(currentPage, movieTitle);
+    } else {
+      await loadMovies(currentPage);
+    }
     updatePagination();
   }
   if (currentPage === 2) {
@@ -118,7 +127,11 @@ function normalizeBeforeAfterPages() {
     showElement(nextPage2);
     showElement(dotsPageLast);
     showElement(lastPage);
-    loadMovies(currentPage);
+    if (movieTitle) {
+      await loadMoviesFromInput(currentPage, movieTitle);
+    } else {
+      await loadMovies(currentPage);
+    }
 
     updatePagination();
   }
@@ -132,8 +145,11 @@ function normalizeBeforeAfterPages() {
     showElement(nextPage2);
     showElement(dotsPageLast);
     showElement(lastPage);
-    loadMovies(currentPage);
-    console.log('strona 3 NORM');
+    if (movieTitle) {
+      await loadMoviesFromInput(currentPage, movieTitle);
+    } else {
+      await loadMovies(currentPage);
+    }
     updatePagination();
   }
   if (currentPage === 4) {
@@ -146,95 +162,256 @@ function normalizeBeforeAfterPages() {
     showElement(nextPage2);
     showElement(dotsPageLast);
     showElement(lastPage);
-    loadMovies(currentPage);
-    console.log('strona 4 NORM');
-    updatePagination();
-  }
-  if (currentPage <= totalPages - 5 && currentPage > 4) {
-    currentPage = currentPage;
-    showElement(firstPage);
-    showElement(dotsPage);
-    showElement(prevPage2);
-    showElement(prevPage1);
-    showElement(nextPage1);
-    showElement(nextPage2);
-    showElement(dotsPageLast);
-    showElement(lastPage);
-    loadMovies(currentPage);
-    console.log('strona od 5 do 495 NORM');
+    if (movieTitle) {
+      await loadMoviesFromInput(currentPage, movieTitle);
+    } else {
+      await loadMovies(currentPage);
+    }
     updatePagination();
   }
 
-  if (currentPage === totalPages - 4 && currentPage > 4) {
+  if (currentPage === totalPages - 7) {
     currentPage = currentPage;
-    showElement(firstPage);
-    showElement(dotsPage);
-    showElement(prevPage1);
-    showElement(prevPage2);
+    hideElement(firstPage);
+    hideElement(dotsPage);
+    hideElement(prevPage2);
     showElement(nextPage1);
     showElement(nextPage2);
     showElement(dotsPageLast);
     showElement(lastPage);
-    loadMovies(currentPage);
-    console.log('strona 496 NORM');
+    if (movieTitle) {
+      await loadMoviesFromInput(currentPage, movieTitle);
+    } else {
+      await loadMovies(currentPage);
+    }
     updatePagination();
   }
-  if (currentPage === totalPages - 3 && currentPage > 8) {
+
+  if (currentPage === totalPages - 6) {
     currentPage = currentPage;
-    showElement(firstPage);
-    showElement(dotsPage);
-    showElement(prevPage1);
-    showElement(prevPage2);
+    hideElement(dotsPage);
+    hideElement(prevPage2);
+    showElement(nextPage1);
+    showElement(nextPage2);
+    showElement(dotsPageLast);
+    showElement(lastPage);
+    if (movieTitle) {
+      await loadMoviesFromInput(currentPage, movieTitle);
+    } else {
+      await loadMovies(currentPage);
+    }
+    updatePagination();
+  }
+
+  if (currentPage === totalPages - 5) {
+    currentPage = currentPage;
+    hideElement(dotsPage);
+    showElement(nextPage1);
+    showElement(nextPage2);
+    showElement(dotsPageLast);
+    showElement(lastPage);
+    if (movieTitle) {
+      await loadMoviesFromInput(currentPage, movieTitle);
+    } else {
+      await loadMovies(currentPage);
+    }
+    updatePagination();
+  }
+
+  if (currentPage === totalPages - 4) {
+    currentPage = currentPage;
+    showElement(nextPage1);
+    showElement(nextPage2);
+    showElement(dotsPageLast);
+    showElement(lastPage);
+
+    if (movieTitle) {
+      await loadMoviesFromInput(currentPage, movieTitle);
+    } else {
+      await loadMovies(currentPage);
+    }
+    updatePagination();
+  }
+  if (currentPage === totalPages - 3) {
+    currentPage = currentPage;
     showElement(nextPage1);
     showElement(nextPage2);
     hideElement(dotsPageLast);
     showElement(lastPage);
     updatePagination();
-    loadMovies(currentPage);
-    console.log('strona 497 NORM');
+    if (movieTitle) {
+      await loadMoviesFromInput(currentPage, movieTitle);
+    } else {
+      await loadMovies(currentPage);
+    }
   }
-  if (currentPage === totalPages - 2 && currentPage > 8) {
+  if (currentPage === totalPages - 2) {
     currentPage = currentPage;
-    showElement(firstPage);
-    showElement(dotsPage);
-    showElement(prevPage1);
-    showElement(prevPage2);
-    showElement(nextPage1);
-    showElement(nextPage2);
-    hideElement(dotsPageLast);
-    hideElement(lastPage);
-    updatePagination();
-    loadMovies(currentPage);
-    console.log('strona 498 NORM');
-  }
-  if (currentPage === totalPages - 1 && currentPage > 8) {
-    currentPage = currentPage;
-    showElement(firstPage);
-    showElement(dotsPage);
-    showElement(prevPage1);
-    showElement(prevPage2);
+
     showElement(nextPage1);
     hideElement(nextPage2);
     hideElement(dotsPageLast);
-    hideElement(lastPage);
+    showElement(lastPage);
+
     updatePagination();
-    loadMovies(currentPage);
-    console.log('strona 499 NORM');
+    if (movieTitle) {
+      await loadMoviesFromInput(currentPage, movieTitle);
+    } else {
+      await loadMovies(currentPage);
+    }
   }
-  if (currentPage === totalPages && currentPage > 8) {
+  if (currentPage === totalPages - 1) {
     currentPage = currentPage;
-    showElement(firstPage);
-    showElement(dotsPage);
-    showElement(prevPage1);
-    showElement(prevPage2);
+
+    hideElement(nextPage1);
+    hideElement(nextPage2);
+    hideElement(dotsPageLast);
+    showElement(lastPage);
+    updatePagination();
+    if (movieTitle) {
+      await loadMoviesFromInput(currentPage, movieTitle);
+    } else {
+      await loadMovies(currentPage);
+    }
+  }
+  if (currentPage === totalPages) {
+    currentPage = currentPage;
+
     hideElement(nextPage1);
     hideElement(nextPage2);
     hideElement(dotsPageLast);
     hideElement(lastPage);
     updatePagination();
-    loadMovies(currentPage);
-    console.log('strona 500 NORM');
+    if (movieTitle) {
+      await loadMoviesFromInput(currentPage, movieTitle);
+    } else {
+      await loadMovies(currentPage);
+    }
   }
+
+  if (totalPages >= 5 && currentPage >= 5) {
+    showElement(firstPage);
+    showElement(dotsPage);
+    showElement(prevPage1);
+    showElement(prevPage2);
+    updatePagination();
+    if (movieTitle) {
+      await loadMoviesFromInput(currentPage, movieTitle);
+    } else {
+      await loadMovies(currentPage);
+    }
+  }
+
+  ///////////////////////////////////////////
+  // PAGINACJA ASI
+  ///////////////////////////////////////////
+
+  if (totalPages === 500) {
+    if (currentPage <= totalPages - 5 && currentPage > 4) {
+      currentPage = currentPage;
+      showElement(firstPage);
+      showElement(dotsPage);
+      showElement(prevPage2);
+      showElement(prevPage1);
+      showElement(nextPage1);
+      showElement(nextPage2);
+      showElement(dotsPageLast);
+      showElement(lastPage);
+      if (movieTitle) {
+        await loadMoviesFromInput(currentPage, movieTitle);
+      } else {
+        await loadMovies(currentPage);
+      }
+      updatePagination();
+    }
+
+    if (currentPage === totalPages - 4 && currentPage > 4) {
+      currentPage = currentPage;
+      showElement(firstPage);
+      showElement(dotsPage);
+      showElement(prevPage1);
+      showElement(prevPage2);
+      showElement(nextPage1);
+      showElement(nextPage2);
+      showElement(dotsPageLast);
+      showElement(lastPage);
+      if (movieTitle) {
+        await loadMoviesFromInput(currentPage, movieTitle);
+      } else {
+        await loadMovies(currentPage);
+      }
+      updatePagination();
+    }
+    if (currentPage === totalPages - 3 && currentPage > 8) {
+      currentPage = currentPage;
+      showElement(firstPage);
+      showElement(dotsPage);
+      showElement(prevPage1);
+      showElement(prevPage2);
+      showElement(nextPage1);
+      showElement(nextPage2);
+      hideElement(dotsPageLast);
+      showElement(lastPage);
+      updatePagination();
+      if (movieTitle) {
+        await loadMoviesFromInput(currentPage, movieTitle);
+      } else {
+        await loadMovies(currentPage);
+      }
+    }
+    if (currentPage === totalPages - 2 && currentPage > 8) {
+      currentPage = currentPage;
+      showElement(firstPage);
+      showElement(dotsPage);
+      showElement(prevPage1);
+      showElement(prevPage2);
+      showElement(nextPage1);
+      showElement(nextPage2);
+      hideElement(dotsPageLast);
+      hideElement(lastPage);
+      updatePagination();
+      if (movieTitle) {
+        await loadMoviesFromInput(currentPage, movieTitle);
+      } else {
+        await loadMovies(currentPage);
+      }
+    }
+    if (currentPage === totalPages - 1 && currentPage > 8) {
+      currentPage = currentPage;
+      showElement(firstPage);
+      showElement(dotsPage);
+      showElement(prevPage1);
+      showElement(prevPage2);
+      showElement(nextPage1);
+      hideElement(nextPage2);
+      hideElement(dotsPageLast);
+      hideElement(lastPage);
+      updatePagination();
+      if (movieTitle) {
+        await loadMoviesFromInput(currentPage, movieTitle);
+      } else {
+        await loadMovies(currentPage);
+      }
+    }
+    if (currentPage === totalPages && currentPage > 8) {
+      currentPage = currentPage;
+      showElement(firstPage);
+      showElement(dotsPage);
+      showElement(prevPage1);
+      showElement(prevPage2);
+      hideElement(nextPage1);
+      hideElement(nextPage2);
+      hideElement(dotsPageLast);
+      hideElement(lastPage);
+      updatePagination();
+      if (movieTitle) {
+        await loadMoviesFromInput(currentPage, movieTitle);
+      } else {
+        await loadMovies(currentPage);
+      }
+    }
+  }
+  ///////////////////////////////////////////
 }
 
 //EVENT LISTENER
@@ -265,14 +442,14 @@ prevPage1.addEventListener('click', () => {
 });
 
 nextPage1.addEventListener('click', () => {
-  if (currentPage < totalPages - 1) {
+  if (currentPage < totalPages) {
     currentPage += 1;
     normalizeBeforeAfterPages();
   }
 });
 
 nextPage2.addEventListener('click', () => {
-  if (currentPage < totalPages - 1) {
+  if (currentPage < totalPages) {
     currentPage += 2;
     normalizeBeforeAfterPages();
   }
@@ -294,13 +471,16 @@ nextButton.addEventListener('click', () => {
 });
 
 //PAGINACJA KLAWIATURA
-function changePage(newPage) {
+async function changePage(newPage) {
   if (newPage >= 1 && newPage <= totalPages) {
     currentPage = newPage;
-    loadMovies(currentPage);
+    if (movieTitle) {
+      await loadMoviesFromInput(currentPage, movieTitle);
+    } else {
+      await loadMovies(currentPage);
+    }
     normalizeBeforeAfterPages();
     updatePagination();
-    scrollToTop(); //
   }
 }
 
@@ -313,4 +493,4 @@ document.addEventListener('keydown', event => {
   }
 });
 
-export { fetchTotalResults, updatePagination, runAsync };
+export { fetchTotalResults, updatePagination, runAsync, normalizeBeforeAfterPages, currentPage };
