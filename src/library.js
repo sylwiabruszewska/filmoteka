@@ -6,3 +6,4 @@ import './js/movie-modal';
 // import './js/search-movies';
 import './js/fetch-data';
 import './js/firebase/firebase-summary';
+import './js/library-load';
