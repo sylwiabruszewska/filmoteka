@@ -2,10 +2,10 @@
   "name": "parcel-project-template",
   "version": "1.1.0",
   "description": "",
-  "homepage": "https://sebastianprf.github.io/goit-projekt-js-team3",
+  "homepage": "https://sylwiabruszewska.github.io/filmoteka",
   "scripts": {
     "dev": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /goit-projekt-js-team3/"
+    "build": "parcel build src/*.html --public-url /filmoteka/"
   },
   "repository": {
     "type": "git",
